@@ -3,6 +3,9 @@ import UIKit
 // Returning values from a closure
 /*
  write inside your closure, directly before the in keyword
+ 
+ write them before in
+ ) -> String
  */
 
 let driving = { (place: String) in
