@@ -3,8 +3,8 @@ import UIKit
 // Operators
 
 /*
- Mdulus is written using a percent symbol: %.
- It means “divide the left hand number evenly by the right, and return the remainder.”
+ the Modulus is written using a percent symbol %
+ It means “divide the left hand number evenly by the right and return the remainder.”
  
  So, 9 % 3 returns 0 because 3 divides evenly into 9, whereas 10 % 3 returns 1, because 10 divides by 3 three times, with remainder 1
  */
