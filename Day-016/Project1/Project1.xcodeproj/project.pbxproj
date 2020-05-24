@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA336477247A63B100080DBC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA336476247A63B100080DBC /* DetailViewController.swift */; };
 		DAA89EDC247912D000466504 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA89EDB247912D000466504 /* AppDelegate.swift */; };
 		DAA89EDE247912D000466504 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA89EDD247912D000466504 /* SceneDelegate.swift */; };
 		DAA89EE0247912D000466504 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA89EDF247912D000466504 /* ViewController.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DA336476247A63B100080DBC /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		DAA89ED8247912D000466504 /* Project1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAA89EDB247912D000466504 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAA89EDD247912D000466504 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 				DAA89EDB247912D000466504 /* AppDelegate.swift */,
 				DAA89EDD247912D000466504 /* SceneDelegate.swift */,
 				DAA89EDF247912D000466504 /* ViewController.swift */,
+				DA336476247A63B100080DBC /* DetailViewController.swift */,
 				DAA89EE1247912D000466504 /* Main.storyboard */,
 				DAA89EE7247912D800466504 /* Assets.xcassets */,
 				DAA89EE9247912D800466504 /* LaunchScreen.storyboard */,
@@ -191,6 +194,7 @@
 			files = (
 				DAA89EE0247912D000466504 /* ViewController.swift in Sources */,
 				DAA89EE6247912D000466504 /* Project1.xcdatamodeld in Sources */,
+				DA336477247A63B100080DBC /* DetailViewController.swift in Sources */,
 				DAA89EDC247912D000466504 /* AppDelegate.swift in Sources */,
 				DAA89EDE247912D000466504 /* SceneDelegate.swift in Sources */,
 			);
