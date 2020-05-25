@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     
     @IBOutlet var button1: UIButton!
     @IBOutlet var button2: UIButton!
@@ -17,7 +17,8 @@ class ViewController: UIViewController {
     
     var countries = [String]() //empty array
     var score = 0
-    
+    var correctAnswer = 0
+    var totalQuestions = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,15 +40,54 @@ class ViewController: UIViewController {
     }
     // CALayer sits beneath all your UIViews (that's the parent of UIButton, UITableView)
     
-    func askQuestion() {
+    func askQuestion(action: UIAlertAction! = nil) {
+        countries.shuffle() // auto randomise array
+        correctAnswer = Int.random(in: 0...2)
+        
         button1.setImage(UIImage(named: countries[0]),
                          for: .normal) // standard state of a button
         button2.setImage(UIImage(named: countries[1]),
                          for: .normal)
         button3.setImage(UIImage(named: countries[2]),
                          for: .normal)
+        
+        title = countries[correctAnswer].uppercased() + " - Your Score: " + String(score)
     }
-
+    
+    
+    @IBAction func buttonTapped(_ sender: UIButton) {
+        var title: String
+        totalQuestions += 1
+        
+        if sender.tag == correctAnswer {
+            title = "Correct"
+            score += 1
+        } else {
+            title = "Wrong! That’s the flag of \(countries[sender.tag].uppercased())"
+            score -= 1
+        }
+        
+        if totalQuestions <= 10 {
+        let ac = UIAlertController(title: title, message: "Your current score is \(score)", preferredStyle: .alert)
+        
+        ac.addAction(UIAlertAction(title: "Continue",
+               style: .default, handler: askQuestion)) // dont use askQuestion()
+                // Alert options are .default, .cancel, and .destructive
+            present(ac, animated: true)
+        } else {
+            let ac = UIAlertController(title: title, message: "Your final score is \(score) / \(totalQuestions)", preferredStyle: .alert)
+            
+            ac.addAction(UIAlertAction(title: "Restart",
+                   style: .default, handler: askQuestion)) // dont use askQuestion()
+                    // Alert options are .default, .cancel, and .destructive
+                present(ac, animated: true)
+            
+            totalQuestions = 0
+            score = 0
+        }
+            
+    }
+    
 }
 
 /*
@@ -56,10 +96,10 @@ class ViewController: UIViewController {
  
  CALayer sits at a lower technical level than UIButton, which means it doesn't understand what a UIColor is.
  UIButton knows what a UIColor is because they are both at the same technical level, but CALayer is below UIButton, so UIColor is a mystery.
-
+ 
  Don't despair, though: CALayer has its own way of setting colors called CGColor,
  - which comes from Apple's Core Graphics framework.
  - This, like CALayer, is at a lower level than UIButton, so the two can talk happily
-
+ 
  Even better, UIColor (which sits above CGColor) is able to convert to and from CGColor easily, which means you don't need to worry about the complexity
  */
