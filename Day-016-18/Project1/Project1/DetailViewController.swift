@@ -24,12 +24,13 @@ class DetailViewController: UIViewController {
     
     var selectedImage: String? // optional since it wont exist when view is created
     var pictureTotal = 0
-    var pictureIndex = 0
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        var pictureIndex = selectedImage.
         
         title = "Picture \(pictureIndex) of \(pictureTotal)"
         navigationItem.largeTitleDisplayMode = .never  // forces normal size title

@@ -47,7 +47,7 @@ class ViewController: UITableViewController {
             "Detail") as? DetailViewController {
             vc.selectedImage = pictures[indexPath.row]
             vc.pictureTotal = pictures.count
-            //vc.pictureIndex = selectedImage.indexPath.item
+            //vc.pictureIndex = pictures.IndexPath.item
             navigationController?.pushViewController(vc, animated: true) // Navigation controllers manage a stack of view controllers that can be pushed
         }
         /*
