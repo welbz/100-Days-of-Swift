@@ -25,7 +25,7 @@ class ViewController: UITableViewController {
         
         for item in items {
             if item.hasSuffix(".png") {
-                flagImages.append(item)
+                flagImages.append(String(item.dropLast(4))) // removes last 4 .png
             }
         }
         print(flagImages)
@@ -39,7 +39,7 @@ class ViewController: UITableViewController {
     // table view cells are reused when they are go off the sceeen
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Picture", for: indexPath)
-        cell.textLabel?.text = flagImages.sorted()[indexPath.row]
+        cell.textLabel?.text = flagImages[indexPath.row]
         return cell
     }
     
