@@ -27,16 +27,21 @@ class ViewController: UIViewController, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Open", style: .plain, target: self, action: #selector(openTapped))
+       
         
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil) // add left spacing to align refresh on right // eg Spacer()
         let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(webView.reload)) // refresh button
+        let backBtn = UIBarButtonItem(barButtonSystemItem: .rewind, target: webView, action: #selector(webView.goBack)) // back button
+        let forwardBtn = UIBarButtonItem(barButtonSystemItem: .fastForward, target: webView, action: #selector(webView.goForward)) // forward button
         
         progressView = UIProgressView(progressViewStyle: .default)
         progressView.sizeToFit() // layout sizes to fit full progressView
         let progressButton = UIBarButtonItem(customView: progressView) // wraps button as UIBarButtonItem in toolbar
         
-        toolbarItems = [progressButton, spacer, refresh]
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Open", style: .plain, target: self, action: #selector(openTapped))
+        
+        toolbarItems = [backBtn, spacer, progressButton, spacer, forwardBtn, spacer, refresh]
         navigationController?.isToolbarHidden = false // toolbar will show
         
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
@@ -87,14 +92,18 @@ class ViewController: UIViewController, WKNavigationDelegate {
             for website in websites { // loop thorugh all websites in safe list
                 if host.contains(website) { // contains to check each safe website is in the host name
                     decisionHandler(.allow) // if found, we want to allow loading
-                    return // safely return and exit method
+                     return // safely return and exit method
                 }
             }
         }
-        
         decisionHandler(.cancel)
         // if the 'if let' fails or it succeeds but safe website does not exist in host
-        // contains is better than prefix as mobile sites url could be m.applle.com
+        // contains is better than prefix as mobile sites url could be m.apple.com
+        
+        let ac = UIAlertController(title: "Error", message: "This website is blocked!", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(ac, animated: true)
+        // alert if website is not in list of acceptable websites
     }
 }
 
