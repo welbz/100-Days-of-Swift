@@ -15,7 +15,9 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Challenge 3
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .redo, target: self, action: #selector(startGame))
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(promptForAnswer))
         
         
@@ -66,39 +68,28 @@ class ViewController: UITableViewController {
     func submit(_ answer: String) {
         let lowerAnswer = answer.lowercased() // make lowercase
         
-        let errorTitle: String
-        let errorMessage: String
+        let errorTitle = ""
+        let errorMessage = ""
         
         if isPossible(word: lowerAnswer) {
             if isOrignal(word: lowerAnswer) {
                 if isReal(word: lowerAnswer) {
-                    usedWords.insert(answer, at: 0) // inserts at top of table
+                    // Challenge 4 - Bonus Bug insert answer should be lowerAnswer
+                    usedWords.insert(lowerAnswer, at: 0) // inserts at top of table
                     
                     let indexPath = IndexPath(row: 0, section: 0) // inserts a row at 0 in section 0
                     tableView.insertRows(at: [indexPath], with: .automatic) // adding 1 cell is easier than reloading whole table
                     
                     return // if is fine, it exits before alerts show
                     
-                    
                 } else { // isReal
-                    if lowerAnswer.utf16.count < 3 {
-                        errorTitle = "Word not recoginzed!"
-                        errorMessage = "Word needs to be more than 3 characters"
-                    } else if lowerAnswer == title {
-                        errorTitle = "Word not recoginzed!"
-                        errorMessage = "That is the same as the given word"
-                    } else {
-                        errorTitle = "Word not recoginzed!"
-                        errorMessage = "You can't just make them up"
-                    }
+                    showErrorMessage(title: "Word not recoginsed", message: "You can't just make them up!")
                 }
             } else { // isOriginal
-                errorTitle = "Word already used!"
-                errorMessage = "Be more original"
+                showErrorMessage(title: "Word already used", message: "Be more original!")
             }
         } else { // isPossible
-            errorTitle = "Word not Possible!"
-            errorMessage = "You can't spell that word from \(title!.lowercased())." // could use guard but title will exist
+            showErrorMessage(title: "Word not Possible", message: "You can't spell that word from \(title!.lowercased())!")
         }
         
         // if return did not get hit
@@ -125,11 +116,6 @@ class ViewController: UITableViewController {
     }
     
     func isReal(word: String) -> Bool {
-        if word.utf16.count < 3 {
-            return false
-        } else if word == title {
-            return false
-        } else {
             let checker = UITextChecker() //UIKit spell checker - not good for Swift strings
             let range  = NSRange(location: 0, length: word.utf16.count)
             // Range to scan - start at 0 and scan full length of word - uses Object C string utf16.count cause of backwards compatability
@@ -139,9 +125,18 @@ class ViewController: UITableViewController {
             let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
             // word is String to scan, range is how much of the range to scan, language is the dictionary to check the word against
             
+            // Challenge 1
+            if word.utf16.count < 3 {return false}
+            if word == title {return false}
+            
             return misspelledRange.location == NSNotFound
             // tells us the word is spelled correctly
         }
-    }
     
-}
+    // Challenge 2
+    func showErrorMessage(title: String, message: String) {
+            let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Ok", style: .default))
+            present(ac, animated: true)
+        }
+    }
