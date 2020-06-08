@@ -15,6 +15,7 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .redo, target: self, action: #selector(startGame))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(promptForAnswer))
         
         
@@ -31,7 +32,7 @@ class ViewController: UITableViewController {
         startGame() // call it at end of ViewDidLoad
     }
     
-    func startGame() {
+    @objc func startGame() { // needs @objc since its called from nav bar
         title = allWords.randomElement() // sets VC title to a random word
         usedWords.removeAll(keepingCapacity: true) // removes all values from usedWords array
         tableView.reloadData() // Calls reload data method - asks to reload all rows from scratch - good for changing levels in game
@@ -78,9 +79,18 @@ class ViewController: UITableViewController {
                     
                     return // if is fine, it exits before alerts show
                     
+                    
                 } else { // isReal
-                    errorTitle = "Word not recoginzed!"
-                    errorMessage = "You can't just make them up"
+                    if lowerAnswer.utf16.count < 3 {
+                        errorTitle = "Word not recoginzed!"
+                        errorMessage = "Word needs to be more than 3 characters"
+                    } else if lowerAnswer == title {
+                        errorTitle = "Word not recoginzed!"
+                        errorMessage = "That is the same as the given word"
+                    } else {
+                        errorTitle = "Word not recoginzed!"
+                        errorMessage = "You can't just make them up"
+                    }
                 }
             } else { // isOriginal
                 errorTitle = "Word already used!"
@@ -115,17 +125,23 @@ class ViewController: UITableViewController {
     }
     
     func isReal(word: String) -> Bool {
-        let checker = UITextChecker() //UIKit spell checker - not good for Swift strings
-        let range  = NSRange(location: 0, length: word.utf16.count)
-        // Range to scan - start at 0 and scan full length of word - uses Object C string utf16.count cause of backwards compatability
-        // UIKit / SpriteKit - Always use utf16.count for the character count
-        // Swift or own code - Can use .count
-        
-        let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
-        // word is String to scan, range is how much of the range to scan, language is the dictionary to check the word against
-        
-        return misspelledRange.location == NSNotFound
-        // tells us the word is spelled correctly
+        if word.utf16.count < 3 {
+            return false
+        } else if word == title {
+            return false
+        } else {
+            let checker = UITextChecker() //UIKit spell checker - not good for Swift strings
+            let range  = NSRange(location: 0, length: word.utf16.count)
+            // Range to scan - start at 0 and scan full length of word - uses Object C string utf16.count cause of backwards compatability
+            // UIKit / SpriteKit - Always use utf16.count for the character count
+            // Swift or own code - Can use .count
+            
+            let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
+            // word is String to scan, range is how much of the range to scan, language is the dictionary to check the word against
+            
+            return misspelledRange.location == NSNotFound
+            // tells us the word is spelled correctly
+        }
     }
     
 }
