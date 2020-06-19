@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UITableViewController {
     
     var petitions = [Petition]()
-    var filteredPetitions = [Petition]()
+    var filteredPetitions = [Petition]() //to do
     let searchText = ""
     
     override func viewDidLoad() {
@@ -68,6 +68,7 @@ class ViewController: UITableViewController {
         present(ac, animated: true)
     }
     
+    // here
     func submit(_ searchText: String) {
         let searchItem = searchText.lowercased()
         print(searchItem)
