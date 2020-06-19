@@ -15,6 +15,7 @@
 		DA3F9A76249CB060004A2A22 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA3F9A74249CB060004A2A22 /* LaunchScreen.storyboard */; };
 		DA3F9A7E249CB3B1004A2A22 /* PersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3F9A7D249CB3B1004A2A22 /* PersonCell.swift */; };
 		DA3F9A80249CDB7C004A2A22 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3F9A7F249CDB7C004A2A22 /* Person.swift */; };
+		DA3F9A82249CE759004A2A22 /* Notes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3F9A81249CE759004A2A22 /* Notes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		DA3F9A77249CB060004A2A22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA3F9A7D249CB3B1004A2A22 /* PersonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCell.swift; sourceTree = "<group>"; };
 		DA3F9A7F249CDB7C004A2A22 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		DA3F9A81249CE759004A2A22 /* Notes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				DA3F9A69249CB05C004A2A22 /* AppDelegate.swift */,
 				DA3F9A6B249CB05C004A2A22 /* SceneDelegate.swift */,
 				DA3F9A6D249CB05C004A2A22 /* ViewController.swift */,
+				DA3F9A81249CE759004A2A22 /* Notes.swift */,
 				DA3F9A7F249CDB7C004A2A22 /* Person.swift */,
 				DA3F9A6F249CB05C004A2A22 /* Main.storyboard */,
 				DA3F9A7D249CB3B1004A2A22 /* PersonCell.swift */,
@@ -149,6 +152,7 @@
 				DA3F9A6A249CB05C004A2A22 /* AppDelegate.swift in Sources */,
 				DA3F9A7E249CB3B1004A2A22 /* PersonCell.swift in Sources */,
 				DA3F9A6C249CB05C004A2A22 /* SceneDelegate.swift in Sources */,
+				DA3F9A82249CE759004A2A22 /* Notes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

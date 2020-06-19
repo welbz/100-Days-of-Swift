@@ -6,6 +6,12 @@
 //  Copyright © 2020 Zake Media Pty Ltd. All rights reserved.
 //
 
+//  Project 10
+// www.hackingwithswift.com/100/42
+// www.hackingwithswift.com/100/43
+// www.hackingwithswift.com/100/44
+
+
 import UIKit
 
 class ViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -68,6 +74,10 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         present(picker, animated: true) // display
     }
     
+    
+    // Challenge 2
+    //Try using picker.sourceType = .camera which will tell it to create a new image by taking a photo.
+    //This is only available on devices
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
         
