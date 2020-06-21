@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UITableViewController {
     
     var petitions = [Petition]()
-    var filteredPetitions = [Petition]() //to do
+    var filteredPetitions = [Petition]() // Challenge 2
     let searchText = ""
     
     override func viewDidLoad() {
@@ -61,43 +61,35 @@ class ViewController: UITableViewController {
             [weak self, weak ac] action in
             guard let searchText = ac?.textFields?[0].text else { return }
             self?.submit(searchText)
-            print("submitting")
         }
         
         ac.addAction(submitAction)
         present(ac, animated: true)
+        
     }
     
-    // here
+    // Challenge 2
     func submit(_ searchText: String) {
-        let searchItem = searchText.lowercased()
-        print(searchItem)
-        print(filteredPetitions.count)
         
-        // checks all petition objects title and body for search word
+        let searchItem: String = searchText.lowercased()
         
-        // Need to fix - search for word in paragraph
+        print("Submitting")
+        print("Searched Word: \(searchItem)")
+        print("Total Petitions: \(petitions.count)")
+        print("Filtered Petitions: \(filteredPetitions.count)")
+        
         for item in petitions {
-            if item.title.contains("\(searchItem)") || item.body.contains(searchItem) {
+            let itemTitle: String = item.title
+            let itemBody: String = item.body
+            
+            if itemTitle.contains("\(searchItem)") || itemBody.contains("\(searchItem)") {
                 filteredPetitions.insert(item, at: 0)
+                print("insering petitions containing \"\(searchItem)\" into filteredPetitions array")
             }
-            
-            print(filteredPetitions.count)
-            //print(filteredPetitions)
-                    
-            /*
-                    let searchedPetitions = petitions.filter { $0.body == searchItem }
-                    // $0.title == searchItem || $0.body == searchItem
-            
-                    print(searchedPetitions.count)
-            
-                    // insert the results into filteredPetitions array
-                    filteredPetitions.insert(contentsOf: searchedPetitions, at: 0)
-                    print(filteredPetitions.count)
-            
-                    return
-            */
         }
+        
+        print("Petitions now in filteredPetitions: \(filteredPetitions.count)")
+        
         tableView.reloadData()
     }
     
@@ -116,6 +108,7 @@ class ViewController: UITableViewController {
             petitions = jsonPetitions.results
             tableView.reloadData()
         }
+        print("Total petitions loaded: \(petitions.count)")
     }
     
     
