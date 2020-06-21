@@ -26,6 +26,9 @@ class ViewController: UIViewController {
         }
     }
     
+    // Challenge 3
+    var numberOfMatches = 0
+    
     
     var level = 1
     
@@ -78,15 +81,17 @@ class ViewController: UIViewController {
         clear.addTarget(self, action: #selector(clearTapped), for: .touchUpInside)
         view.addSubview(clear)
         
+        
         // Container of buttons
         let buttonsView = UIView()
         buttonsView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(buttonsView)
-        
-        
-        
-        
-        NSLayoutConstraint.activate([ // must have commas as its array
+        // Chanellge 1 - Add Border
+        buttonsView.layer.borderWidth = 1
+        buttonsView.layer.borderColor = UIColor.lightGray.cgColor
+       
+        // must have commas as its array
+        NSLayoutConstraint.activate([
             scoreLabel.topAnchor.constraint(equalTo:
                 view.layoutMarginsGuide.topAnchor),
             scoreLabel.trailingAnchor.constraint(equalTo:
@@ -195,14 +200,22 @@ class ViewController: UIViewController {
             currentAnswer.text = ""
             
             score += 1
+            numberOfMatches += 1
             
             
-            
-            if score % 7 == 0 {
+            // Challenge 3 - deduct points if incorrect guess - also need to track numberOfMatches to level up
+            if numberOfMatches == 7 {
                 let ac = UIAlertController(title: "Well Done!", message: "Are you ready for the next level?", preferredStyle: .alert)
                 ac.addAction(UIAlertAction(title: "Let's Go!", style: .default, handler: levelUp))
                 present(ac, animated: true)
             }
+         // Chanellge 2 - incorrect guess shows an alert telling them they are wrong
+        } else {
+            score -= 1
+            
+            let acError = UIAlertController(title: "Uh Oh!", message: "That is incorrect, try again", preferredStyle: .alert)
+            acError.addAction(UIAlertAction(title: "OK", style: .default))
+            present(acError, animated: true)
         }
         
     }
