@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA0B5B3C24A4D1100046925C /* FireParticles.sks in Resources */ = {isa = PBXBuildFile; fileRef = DA0B5B3B24A4D1100046925C /* FireParticles.sks */; };
+		DA0B5B3E24A4D33F0046925C /* SmokeParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = DA0B5B3D24A4D33F0046925C /* SmokeParticle.sks */; };
 		DA1F184424A0DA7F001DA84C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1F184324A0DA7F001DA84C /* AppDelegate.swift */; };
 		DA1F184624A0DA7F001DA84C /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DA1F184524A0DA7F001DA84C /* GameScene.sks */; };
 		DA1F184A24A0DA7F001DA84C /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1F184924A0DA7F001DA84C /* GameScene.swift */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DA0B5B3B24A4D1100046925C /* FireParticles.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = FireParticles.sks; sourceTree = "<group>"; };
+		DA0B5B3D24A4D33F0046925C /* SmokeParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SmokeParticle.sks; sourceTree = "<group>"; };
 		DA1F184024A0DA7F001DA84C /* Project11.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project11.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA1F184324A0DA7F001DA84C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA1F184524A0DA7F001DA84C /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -66,6 +70,8 @@
 				DA1F185024A0DA83001DA84C /* Assets.xcassets */,
 				DA1F185224A0DA83001DA84C /* LaunchScreen.storyboard */,
 				DA1F185524A0DA83001DA84C /* Info.plist */,
+				DA0B5B3B24A4D1100046925C /* FireParticles.sks */,
+				DA0B5B3D24A4D33F0046925C /* SmokeParticle.sks */,
 			);
 			path = Project11;
 			sourceTree = "<group>";
@@ -129,7 +135,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA1F184F24A0DA7F001DA84C /* Main.storyboard in Resources */,
+				DA0B5B3E24A4D33F0046925C /* SmokeParticle.sks in Resources */,
 				DA1F184624A0DA7F001DA84C /* GameScene.sks in Resources */,
+				DA0B5B3C24A4D1100046925C /* FireParticles.sks in Resources */,
 				DA1F185124A0DA83001DA84C /* Assets.xcassets in Resources */,
 				DA1F185424A0DA83001DA84C /* LaunchScreen.storyboard in Resources */,
 			);

@@ -11,12 +11,25 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     var scoreLabel: SKLabelNode!
+    var ballLimitLabel: SKLabelNode!
+    
+    var ballNames = ["ballRed","ballBlue","ballCyan","ballGreen","ballGrey","ballPurple","ballYellow"]
+    
+    // fix this
+    let box = SKSpriteNode()
     
     var score = 0 {
         didSet {
             scoreLabel.text = "Score: \(score)"
         }
     }
+    
+    var ballLimit = 5 {
+        didSet {
+            ballLimitLabel.text = "Balls: \(ballLimit)"
+        }
+    }
+    
     
     var editLabel: SKLabelNode!
     
@@ -44,6 +57,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.horizontalAlignmentMode = .right
         scoreLabel.position = CGPoint(x: 980, y: 700)
         addChild(scoreLabel)
+        
+        // Create ballLimitLabel and add to screen
+        ballLimitLabel = SKLabelNode(fontNamed: "Chalkduster")
+        ballLimitLabel.text = "Balls: 5"
+        ballLimitLabel.horizontalAlignmentMode = .right
+        ballLimitLabel.position = CGPoint(x: 780, y: 700)
+        addChild(ballLimitLabel)
         
         // Create editLabel and add to screen
         editLabel = SKLabelNode(fontNamed: "Chalkduster")
@@ -87,22 +107,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 box.physicsBody = SKPhysicsBody(rectangleOf: box.size)
                 box.physicsBody?.isDynamic = false // dont allow it to move
-                addChild(box) // add tp game scene
                 
-            } else {
-                let ball = SKSpriteNode(imageNamed: "ballRed")
+                box.name = "box"
+                addChild(box) // add to game scene
+                
+            } else if ballLimit >= 1 {
+                // Challenge 1
+                //let ball = SKSpriteNode(imageNamed: "ballRed")
+                let ball = SKSpriteNode(imageNamed: ballNames.randomElement() ?? "ballRed")
+                
+                // Challenge 3
+                ballLimit -= 1
                 
                 ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0) // behaves as balls not squares
-                ball.physicsBody?.restitution = 0.4 // bouncy-ness (optional)
+                ball.physicsBody?.restitution = 0.6 // bouncy-ness (optional)
                 
                 // collisionBitMask - bounch off everything
                 // contactTestBitMask - tell us every bounch it has
                 ball.physicsBody?.contactTestBitMask = ball.physicsBody?.collisionBitMask
                     ?? 0 // nil coalescing
                 
-                ball.position = location // sets postion at location of touch
+                // Challenge 2
+                ball.position = CGPoint(x: location.x, y: 680) // sets postion at location of touch
                 ball.name = "ball"
                 addChild(ball) // calls in
+            } else {
+                ballLimitLabel.text = "GAME OVER!"
             }
         }
         
@@ -150,9 +180,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // SKNode is the parent class
     func collision(between ball: SKNode, object: SKNode) {
-        if object.name == "good" {
+        
+        if object.name == "box"{
+            object.removeFromParent() // Challenge 3 - remove obstacle boxes when they are hit
+        } else if object.name == "good" {
             destroy(ball: ball)
             score += 1
+            ballLimit += 1
         } else if object.name == "bad" {
             destroy(ball: ball)
             score -= 1
@@ -161,6 +195,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func destroy(ball: SKNode) {
         ball.removeFromParent() // Removed node from node tree
+        
+        if let fireParticles = SKEmitterNode(fileNamed: "FireParticles") { //creates high performace effects
+            fireParticles.position = ball.position // place it where ball is
+            addChild(fireParticles)
+        }
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -173,5 +212,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else if nodeB.name == "ball" {
             collision(between: nodeB, object: nodeA)
         }
+        
     }
 }
