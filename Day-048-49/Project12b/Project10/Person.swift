@@ -1,6 +1,6 @@
 //
 //  Person.swift
-//  Project10
+//  Project 12b
 //
 //  Created by Welby Jennings on 19/6/20.
 //  Copyright © 2020 Zake Media Pty Ltd. All rights reserved.
@@ -10,7 +10,8 @@
 
 import UIKit
 
-class Person: NSObject {
+// Codable - lets read and write this
+class Person: NSObject, Codable {
     var name: String
     var image: String
     

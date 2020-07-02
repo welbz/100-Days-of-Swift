@@ -1,40 +1,46 @@
 //
 //  ViewController.swift
-//  Project10
+//  Project 12b
 //
 //  Created by Welby Jennings on 19/6/20.
 //  Copyright © 2020 Zake Media Pty Ltd. All rights reserved.
 //
 
-//  Project 10
-// www.hackingwithswift.com/100/42
-// www.hackingwithswift.com/100/43
-// www.hackingwithswift.com/100/44
+//  Project 12b
+// www.hackingwithswift.com/100/49
+// www.hackingwithswift.com/read/12/4/fixing-project-10-codable
 
 
 import UIKit
 
 class ViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    // UIImagePickerControllerDelegate - tells us when user chooses images or closes picker
-    // UINavigationControllerDelegate
-    /*
-     The delegate method we care about is imagePickerController(_, didFinishPickingMediaWithInfo:), which returns when the user selected an image and it's being returned to you. This method needs to do several things:
-     Extract the image from the dictionary that is passed as a parameter.
-     Generate a unique filename for it.
-     Convert it to a JPEG, then write that JPEG to disk.
-     Dismiss the view controller.
-     */
+    
     
     var people = [Person]()
-    /*
-     Every time we add a new person, we need to create a new Person object with their details. This is as easy as modifying our initial image picker success method so that it creates a Person object, adds it to our people array, then reloads the collection view
-     */
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPerson))
+        
+        // load array back from disk when app runs
+        let defaults = UserDefaults.standard
+        if let savedPeople = defaults.object(forKey: "people") as? Data {
+            let jsonDecoder = JSONDecoder()
+            
+            do {
+                people = try jsonDecoder.decode([Person].self, from: savedPeople)
+            } catch {
+                print("Failed to load people")
+            }
+        }
+        /*
+         This code is effectively the save() method in reverse: we use the object(forKey:) method to pull out an optional Data, using if let and as? to unwrap it. We then give that to an instance of JSONDecoder to convert it back to an object graph – i.e., our array of Person objects.
+
+         Once again, note the interesting syntax for decode() method: its first parameter is [Person].self, which is Swift’s way of saying “attempt to create an array of Person objects.” This is why we don’t need a typecast when assigning to people – that method will automatically return [People], or if the conversion fails then the catch block will be executed instead.
+         */
+        
     }
     
     // number of sections in UICollectionView
@@ -91,6 +97,8 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         
         let person = Person(name: "Unknown", image: imageName)
         people.append(person)
+        // save after append
+        save()
         collectionView.reloadData()
         /*
          That stores the image name in the Person object and gives them a default name of "Unknown", before reloading the collection view
@@ -113,11 +121,24 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         ac.addAction(UIAlertAction(title: "OK", style: .default) { [weak self, weak ac] _ in
             guard let newName = ac?.textFields?[0].text else { return }
             person.name = newName
+            // save data as soon as rename a person
+            self?.save()
             self?.collectionView.reloadData()
         })
-            
+        
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(ac, animated: true)
+    }
+    
+    func save() {
+        let jsonEndcoder = JSONEncoder()
+        
+        if let savedData = try? jsonEndcoder.encode(people) {
+            let defaults = UserDefaults.standard
+            defaults.set(savedData, forKey: "people")
+        } else {
+            print("Failed to save people")
+        }
     }
 }
 
