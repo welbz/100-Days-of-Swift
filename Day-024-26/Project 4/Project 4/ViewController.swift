@@ -14,7 +14,8 @@ class ViewController: UIViewController, WKNavigationDelegate {
     // conforms to WKNavigationDelegate protocol
     var webView: WKWebView!
     var progressView: UIProgressView!
-    var websites = ["apple.com", "zakemedia.com.au"]
+    var websites = ["apple.com", "zakemedia.com.au", "welbyjennings.com"]
+    var safeWebsites = ["apple", "zakemedia"]
     
     
     
@@ -23,23 +24,26 @@ class ViewController: UIViewController, WKNavigationDelegate {
         webView.navigationDelegate = self
         view = webView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       
+        let url = URL(string: "https://" + websites[0])!
+        // URL data type can be local files not websites
+        // Must be https
+        webView.load(URLRequest(url: url)) // wraps url in a URLRequest
+        webView.allowsBackForwardNavigationGestures = true // enables left and right swipe
         
-        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil) // add left spacing to align refresh on right // eg Spacer()
-        let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(webView.reload)) // refresh button
-        let backBtn = UIBarButtonItem(barButtonSystemItem: .rewind, target: webView, action: #selector(webView.goBack)) // back button
-        let forwardBtn = UIBarButtonItem(barButtonSystemItem: .fastForward, target: webView, action: #selector(webView.goForward)) // forward button
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Open", style: .plain, target: self, action: #selector(openTapped))
         
         progressView = UIProgressView(progressViewStyle: .default)
         progressView.sizeToFit() // layout sizes to fit full progressView
         let progressButton = UIBarButtonItem(customView: progressView) // wraps button as UIBarButtonItem in toolbar
         
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Open", style: .plain, target: self, action: #selector(openTapped))
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil) // add left spacing to align refresh on right // eg Spacer()
+        let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(webView.reload)) // refresh button
+        let backBtn = UIBarButtonItem(barButtonSystemItem: .rewind, target: webView, action: #selector(webView.goBack)) // back button
+        let forwardBtn = UIBarButtonItem(barButtonSystemItem: .fastForward, target: webView, action: #selector(webView.goForward)) // forward button
         
         toolbarItems = [backBtn, spacer, progressButton, spacer, forwardBtn, spacer, refresh]
         navigationController?.isToolbarHidden = false // toolbar will show
@@ -47,14 +51,8 @@ class ViewController: UIViewController, WKNavigationDelegate {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         // Takes 4 Params
         // who observer is, what property you want to observe, which value and context value
-        
-        let url = URL(string: "https://" + websites[0])!
-               // URL data type can be local files not websites
-               // Must be https
-               webView.load(URLRequest(url: url)) // wraps url in a URLRequest
-               webView.allowsBackForwardNavigationGestures = true // enables left and right swipe
     }
-
+    
     @objc func openTapped() {
         let ac = UIAlertController(title: "Open page...", message: nil, preferredStyle: .actionSheet)
         
@@ -77,6 +75,30 @@ class ViewController: UIViewController, WKNavigationDelegate {
         title = webView.title
     }
     
+    // WK Navigation Protocol
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        let url = navigationAction.request.url // let url be the url of the navigation to make code easier to read
+        
+        if let host = url?.host { // unwrap the optional url?.host //if the domain exists pull it out
+            for website in safeWebsites { // loop thorugh all websites in safe list
+                if host.contains("\(website)") { // contains to check each safe website is in the host name
+                    decisionHandler(.allow) // if found, we want to allow loading
+                    return // safely return and exit method
+                }
+            } // end loop
+        
+            // still inside the if let host
+            let ac = UIAlertController(title: "Error", message: "This website is blocked!", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Continue", style: .default))
+            present(ac, animated: true)
+            
+       } // end if let host
+        
+        decisionHandler(.cancel)
+        // if the 'if let' fails or it succeeds but safe website does not exist in host
+        // contains is better than prefix as mobile sites url could be m.apple.com
+    }
+    
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "estimatedProgress" { // whether the keyPath parameter is set to estimatedProgress – that is, if the estimatedProgress value of the web view has changed
             progressView.progress = Float(webView.estimatedProgress) // we set the progress property of our progress view to the new estimatedProgress value
@@ -84,31 +106,11 @@ class ViewController: UIViewController, WKNavigationDelegate {
         }
     }
     
-    // WK Navigation Protocol
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        let url = navigationAction.request.url // let url be the url of the navigation to make code easier to read
-        
-        if let host = url?.host { // unwrap the optional url?.host //if the domain exists pull it out
-            for website in websites { // loop thorugh all websites in safe list
-                if host.contains(website) { // contains to check each safe website is in the host name
-                    decisionHandler(.allow) // if found, we want to allow loading
-                     return // safely return and exit method
-                }
-            }
-        }
-        decisionHandler(.cancel)
-        // if the 'if let' fails or it succeeds but safe website does not exist in host
-        // contains is better than prefix as mobile sites url could be m.apple.com
-        
-        let ac = UIAlertController(title: "Error", message: "This website is blocked!", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        present(ac, animated: true)
-        // alert if website is not in list of acceptable websites
-    }
+    
 }
 
 /*
  Delegation is what's called a programming pattern – a way of writing code – and it's used extensively in iOS. And for good reason: it's easy to understand, easy to use, and extremely flexible.
-
+ 
  A delegate is one thing acting in place of another, effectively answering questions and responding to events on its behalf. In our example, we're using WKWebView: Apple's powerful, flexible and efficient web renderer. But as smart as WKWebView is, it doesn't know (or care) how our application wants to behave, because that's our custom code.
  */
