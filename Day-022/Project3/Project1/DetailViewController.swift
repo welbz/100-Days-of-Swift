@@ -1,6 +1,6 @@
 //
 //  DetailViewController.swift
-//  Project1
+//  Project3 (Copy of Project1)
 //
 //  Created by Welby Jennings on 24/5/20.
 //  Copyright © 2020 Zake Media Pty Ltd. All rights reserved.
@@ -46,17 +46,25 @@ class DetailViewController: UIViewController {
     
     @objc func shareTapped() {
         guard let image = imageView.image?.jpegData(compressionQuality: 0.8)
-            else {
-                print("No image found")
-                return
+        else {
+            print("No image found")
+            return
         }
+        
+        guard let imageTitle = selectedImage
+        else {
+            print ("no image text found")
+            return
+        }
+        
         /*
          Need to ask permission before saving to device or else crash
          This app has crashed because it attempted to access privacy-sensitive data without a usage description.  The app's Info.plist must contain an NSPhotoLibraryAddUsageDescription key with a string value explaining to the user how the app uses this data.
          Need to update info.pist with new row => Privacy - Photo Library Additions Usage Description
          */
         
-        let vc = UIActivityViewController(activityItems: [image], applicationActivities: [])
+        // Challenge 1 - share image name using activityItems: [image,imageTitle] - since its an any array can include multiple image and imageTitle
+        let vc = UIActivityViewController(activityItems: [image,imageTitle], applicationActivities: [])
         vc.popoverPresentationController?.barButtonItem  = navigationItem.rightBarButtonItem // need popover for iPad
         present(vc, animated: true)
     }

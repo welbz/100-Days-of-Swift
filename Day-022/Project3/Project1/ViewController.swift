@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  Project1
+//  Project3 (Copy of Project1)
 //
 //  Created by Welby Jennings on 23/5/20.
 //  Copyright © 2020 Zake Media Pty Ltd. All rights reserved.
@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UITableViewController {
     var pictures = [String]()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +28,7 @@ class ViewController: UITableViewController {
                 pictures.append(item)
             }
         }
+        self.pictures.sort()
         print(pictures)
     }
    
@@ -38,7 +40,7 @@ class ViewController: UITableViewController {
     // table view cells are reused when they are go off the sceeen
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Picture", for: indexPath)
-        cell.textLabel?.text = pictures.sorted()[indexPath.row]
+        cell.textLabel?.text = pictures[indexPath.row] // removed .sorted() as it should sort the array itself and not just the table view
         return cell
     }
     
@@ -48,14 +50,17 @@ class ViewController: UITableViewController {
             vc.selectedImage = pictures[indexPath.row]
             vc.pictureTotal = pictures.count
             
-            // add of let
-            vc.pictureIndex = pictures.firstIndex(of: vc.selectedImage ?? "NA") ?? 0
+            if let selectedImage = vc.selectedImage,
+               let pictureIndex = pictures.firstIndex(of: selectedImage) {
+                                vc.title = "Picture \(pictureIndex + 1) of \(pictures.count)"
+                            }
             
-            navigationController?.pushViewController(vc, animated: true) // Navigation controllers manage a stack of view controllers that can be pushed
+            navigationController?.pushViewController(vc, animated: true)
+            // Navigation controllers manage a stack of view controllers that can be pushed
         }
         /*
          3 things in that one line have the potential to fail
          if any of those things return nil, then the code inside the if let braces won’t run
-         */
+        */
     }
 }
