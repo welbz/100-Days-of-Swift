@@ -23,6 +23,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Project3 - Challenge 3
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
+        
         countries += ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
         
         button1.layer.borderWidth = 1 // 1 point which is 2 px on retina and 3px on HD devices
@@ -86,6 +89,15 @@ class ViewController: UIViewController {
             score = 0
         }
             
+    }
+    
+    // Project 3 - Challenge 3 - Show score when nav button tapped
+    @objc func shareTapped() {
+        let ac = UIAlertController(title: "Your Score", message: "\(score)", preferredStyle: .alert)
+        
+        ac.addAction(UIAlertAction(title: "Continue",
+               style: .default))
+            present(ac, animated: true)
     }
     
 }

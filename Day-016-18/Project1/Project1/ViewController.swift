@@ -10,17 +10,22 @@ import UIKit
 
 class ViewController: UITableViewController {
     var pictures = [String]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Storm Viewer"
-        navigationController?.navigationBar.prefersLargeTitles = true // forces large size title
+        navigationController?.navigationBar.prefersLargeTitles = true
+        // forces large size title
+        
+        // Project3 - Challenge 2
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
+        
         
         let fm = FileManager.default
         let path = Bundle.main.resourcePath!
         let items = try! fm.contentsOfDirectory(atPath: path)
-    
+        
         for item in items {
             if item.hasPrefix("nssl") {
                 // this is a picture to load!
@@ -29,7 +34,7 @@ class ViewController: UITableViewController {
         }
         print(pictures)
     }
-   
+    
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pictures.count
@@ -44,7 +49,7 @@ class ViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let vc = storyboard?.instantiateViewController(withIdentifier:
-            "Detail") as? DetailViewController {
+                                                            "Detail") as? DetailViewController {
             vc.selectedImage = pictures[indexPath.row]
             vc.pictureTotal = pictures.count
             
@@ -57,5 +62,19 @@ class ViewController: UITableViewController {
          3 things in that one line have the potential to fail
          if any of those things return nil, then the code inside the if let braces won’t run
          */
+    }
+    
+    // Project 3 - Challenge 2
+    @objc func shareTapped() {
+        
+        guard let appURL =  URL(string: "https://apps.apple.com/us/app/scorecard/id1510711376")
+        else {
+            print("No App link found")
+            return
+        }
+        
+        let vc = UIActivityViewController(activityItems: [appURL], applicationActivities: nil)
+        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(vc, animated: true)
     }
 }
