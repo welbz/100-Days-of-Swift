@@ -23,7 +23,7 @@ class ViewController: UITableViewController {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(showFilters))
         
-        // Challenge 1
+        // MARK: -  Challenge 1
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(showCredits))
         
         // run fetchJSON in background
@@ -59,7 +59,7 @@ class ViewController: UITableViewController {
     }
     
     
-    // Challenge 1
+    // MARK: - Challenge 1
     @objc func showCredits() {
         let ac = UIAlertController(title: "Credits", message: "This data is from We The People API of the Whitehouse", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default))
@@ -82,14 +82,14 @@ class ViewController: UITableViewController {
         present(ac, animated: true)
     }
     
+    // TODO: check all petition objects title and body for search word -
     func submit(_ searchText: String) {
         let searchItem = searchText.lowercased()
         print(searchItem)
         print(filteredPetitions.count)
         
-        // checks all petition objects title and body for search word
-        
-        // Need to fix - search for word in paragraph
+         
+        // FIXME: - This code to fix - search for word in paragraph -
         for item in petitions {
             if item.title.contains("\(searchItem)") || item.body.contains(searchItem) {
                 filteredPetitions.insert(item, at: 0)
