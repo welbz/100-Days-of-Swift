@@ -22,7 +22,7 @@ class ViewController: UITableViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
         
         
-        // MARK: - Project 9 - Challenge 1
+        // MARK: - Project 9 - Challenge 1 - Adding GCD
         // Background thread
         print("Starting bg thread to append array")
         performSelector(inBackground: #selector(fetchAssets), with: nil)
@@ -33,7 +33,7 @@ class ViewController: UITableViewController {
     }
     
     
-    // MARK: - Project 9 - Challenge 1
+    // MARK: - Project 9 - Challenge 1 - Adding GCD
     @objc func fetchAssets() {
         let fm = FileManager.default
         let path = Bundle.main.resourcePath!

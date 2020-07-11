@@ -26,7 +26,7 @@ class ViewController: UIViewController {
         }
     }
     
-    // Challenge 3
+    // MARK: - Challenge 3 -
     var numberOfMatches = 0
     
     
@@ -89,28 +89,28 @@ class ViewController: UIViewController {
         // Chanellge 1 - Add Border
         buttonsView.layer.borderWidth = 1
         buttonsView.layer.borderColor = UIColor.lightGray.cgColor
-       
+        
         // must have commas as its array
         NSLayoutConstraint.activate([
             scoreLabel.topAnchor.constraint(equalTo:
-                view.layoutMarginsGuide.topAnchor),
+                                                view.layoutMarginsGuide.topAnchor),
             scoreLabel.trailingAnchor.constraint(equalTo:
-                view.layoutMarginsGuide.trailingAnchor),
+                                                    view.layoutMarginsGuide.trailingAnchor),
             
             cluesLabel.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor),
             cluesLabel.leadingAnchor.constraint(equalTo:
-                view.layoutMarginsGuide.leadingAnchor, constant: 100), // margin from left edge
+                                                    view.layoutMarginsGuide.leadingAnchor, constant: 100), // margin from left edge
             cluesLabel.widthAnchor.constraint(equalTo:
-                view.layoutMarginsGuide.widthAnchor, multiplier: 0.6, constant: -100),
+                                                view.layoutMarginsGuide.widthAnchor, multiplier: 0.6, constant: -100),
             
             answerLabel.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor),
             answerLabel.trailingAnchor.constraint(equalTo:
-                view.layoutMarginsGuide.trailingAnchor, constant: -100), // margin from right edge
+                                                    view.layoutMarginsGuide.trailingAnchor, constant: -100), // margin from right edge
             answerLabel.widthAnchor.constraint(equalTo:
-                view.layoutMarginsGuide.widthAnchor, multiplier: 0.4, constant: -100),
+                                                view.layoutMarginsGuide.widthAnchor, multiplier: 0.4, constant: -100),
             
             answerLabel.heightAnchor.constraint(equalTo:
-                cluesLabel.heightAnchor), // makes the heights match
+                                                    cluesLabel.heightAnchor), // makes the heights match
             
             currentAnswer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             currentAnswer.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5), // half width of screen
@@ -179,7 +179,7 @@ class ViewController: UIViewController {
     }
     /*
      Does four things:
-
+     
      It adds a safety check to read the title from the tapped button, or exit if it didn’t have one for some reason.
      Appends that button title to the player’s current answer.
      Appends the button to the activatedButtons array
@@ -209,7 +209,7 @@ class ViewController: UIViewController {
                 ac.addAction(UIAlertAction(title: "Let's Go!", style: .default, handler: levelUp))
                 present(ac, animated: true)
             }
-         // Chanellge 2 - incorrect guess shows an alert telling them they are wrong
+            // Chanellge 2 - incorrect guess shows an alert telling them they are wrong
         } else {
             score -= 1
             
@@ -221,7 +221,7 @@ class ViewController: UIViewController {
     }
     /*
      earch through the solutions array for an item and, if it finds it, tells us its position. Remember, the return value of firstIndex(of:) is optional so that in situations where nothing is found you won't get a value back – we need to unwrap its return value carefully.
-
+     
      If the user gets an answer correct, we're going to change the answers label so that rather than saying "7 LETTERS" it says "HAUNTED", so they know which ones they have solved already.
      
      firstIndex(of:)  will tell us which solution matched their word, then we can use that position to find the matching clue text. All we need to do is split the answer label text up by \n, replace the line at the solution position with the solution itself, then re-join the answers label back together
@@ -232,7 +232,11 @@ class ViewController: UIViewController {
         level += 1
         
         solutions.removeAll(keepingCapacity: true)
-        loadLevel()
+        
+        // MARK: - Project 9 - Challenge 2 - BG Thread
+        print("Starting bg thread")
+        performSelector(inBackground: #selector(loadLevel), with: nil)
+        //loadLevel() - Original code but now in background thread
         
         for button in LetterButtons {
             button.isHidden = false
@@ -240,13 +244,13 @@ class ViewController: UIViewController {
         
     }
     /*
-    Add 1 to level.
-    Remove all items from the solutions array.
-    Call loadLevel() so that a new level file is loaded and shown.
-    Make sure all our letter buttons are visible.
+     Add 1 to level.
+     Remove all items from the solutions array.
+     Call loadLevel() so that a new level file is loaded and shown.
+     Make sure all our letter buttons are visible.
      
-    clears out the existing solutions array before refilling it inside loadLevel()
-    */
+     clears out the existing solutions array before refilling it inside loadLevel()
+     */
     
     
     @objc func clearTapped(_ sender: UIButton) {
@@ -265,15 +269,15 @@ class ViewController: UIViewController {
     
     
     
-    func  loadLevel () {
+    @objc func loadLevel () {
         var clueString = ""
         var solutionsString = ""
         var letterBits = [String]()
         
         if let levelFileURL = Bundle.main.url(forResource: "level\(level)",
-            withExtension: "txt") {
-            if let levevlContents = try? String(contentsOf: levelFileURL) {
-                var lines = levevlContents.components(separatedBy: "\n")
+                                              withExtension: "txt") {
+            if let levelContents = try? String(contentsOf: levelFileURL) {
+                var lines = levelContents.components(separatedBy: "\n")
                 lines.shuffle()
                 
                 for (index, line) in lines.enumerated() {
@@ -289,24 +293,27 @@ class ViewController: UIViewController {
                     
                     let bits = answer.components(separatedBy: "|")
                     letterBits += bits
-                    
+                } // end for loop
+            } // end levelContents
+        } // end levelFileURL
+        
+        // MARK: - Project 9 - Challenge 2 - Back to Main Thread
+        print("Starting main thread")
+        DispatchQueue.main.async { [weak self] in
+            self?.cluesLabel.text = clueString.trimmingCharacters(in: .whitespacesAndNewlines)
+            self?.answerLabel.text = solutionsString.trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            self?.LetterButtons.shuffle()
+            
+            if self?.LetterButtons.count == letterBits.count {
+                for i in 0..<self!.LetterButtons.count { // count through all letterButtons 0-19
+                    self?.LetterButtons[i].setTitle(letterBits[i], for: .normal) //assigns that button's title to the matching bit in letterbits array
                 }
-                
-            }
-        }
+            } // end LetterButtons
+        } // end DispatchQueue
         
-        cluesLabel.text = clueString.trimmingCharacters(in: .whitespacesAndNewlines)
-        answerLabel.text = solutionsString.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        LetterButtons.shuffle()
-        
-        if LetterButtons.count == letterBits.count {
-            for i in 0..<LetterButtons.count { // count through all letterButtons 0-19
-                LetterButtons[i].setTitle(letterBits[i], for: .normal) //assigns that button's title to the matching bit in letterbits array
-            }
-        }
-        
-    }
+    } // end loadLevel func
     
 }
 
