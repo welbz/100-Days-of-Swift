@@ -18,7 +18,7 @@ class ViewController: UITableViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         // forces large size title
         
-        // Project3 - Challenge 2
+        // MARK: - Project3 - Challenge 2
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
         
         
@@ -26,6 +26,7 @@ class ViewController: UITableViewController {
         let path = Bundle.main.resourcePath!
         let items = try! fm.contentsOfDirectory(atPath: path)
         
+        // MARK: - Project 9 - Challenge 1
         for item in items {
             if item.hasPrefix("nssl") {
                 // this is the picture to load!
@@ -64,7 +65,7 @@ class ViewController: UITableViewController {
          */
     }
     
-    // Project 3 - Challenge 2
+    // MARK: - Project 3 - Challenge 2
     @objc func shareTapped() {
         
         guard let appURL =  URL(string: "https://apps.apple.com/us/app/scorecard/id1510711376")

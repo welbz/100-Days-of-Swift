@@ -76,6 +76,25 @@ class ViewController: UIViewController {
         
         var previous: UILabel?
         
+
+        for label in [label1, label2, label3, label4, label5] {
+            // MARK: -  Challenge 1 and 2
+            label.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0).isActive = true
+            label.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0).isActive = true
+            
+            // MARK: - Challenge 3
+            label.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.2, constant: 10).isActive = true
+            
+            if let previous = previous {
+                label.topAnchor.constraint(equalTo: previous.bottomAnchor, constant: 10).isActive = true
+            } else {
+                label.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true // pins to safe area - now displays below the notch
+            }
+            
+            previous = label // previous becomes the current one for next loop
+        }
+        
+/*
         // Anchors
         for label in [label1, label2, label3, label4, label5] {
             label.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
@@ -89,7 +108,7 @@ class ViewController: UIViewController {
             
             previous = label // previous becomes the current one for next loop
         }
-    
+*/
     
     }
         
