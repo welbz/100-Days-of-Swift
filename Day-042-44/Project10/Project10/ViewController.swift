@@ -67,17 +67,19 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         return cell
     }
     
+    // MARK: - Project10 - Challenge 2 -
+    //Try using picker.sourceType = .camera which will tell it to create a new image by taking a photo. This is only available on devices
+    // Had to add access to info plist
     @objc func addNewPerson() {
         let picker = UIImagePickerController()
         picker.allowsEditing = true // allows editing
         picker.delegate = self // assign ourself as delegate
+        picker.sourceType = .camera
         present(picker, animated: true) // display
     }
     
     
-    // Challenge 2
-    //Try using picker.sourceType = .camera which will tell it to create a new image by taking a photo.
-    //This is only available on devices
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
         
@@ -107,6 +109,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let person = people[indexPath.item]
         
+        // MARK: - Project10 - Challenge 1 -
         let ac = UIAlertController(title: "Rename person", message: nil, preferredStyle: .alert)
         ac.addTextField()
         
