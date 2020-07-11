@@ -15,6 +15,8 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        pictures.sort()
+        
         title = "Storm Viewer"
         navigationController?.navigationBar.prefersLargeTitles = true // forces large size title
         
@@ -28,7 +30,6 @@ class ViewController: UITableViewController {
                 pictures.append(item)
             }
         }
-        self.pictures.sort()
         print(pictures)
     }
    

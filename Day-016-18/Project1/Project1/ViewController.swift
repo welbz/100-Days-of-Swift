@@ -28,7 +28,7 @@ class ViewController: UITableViewController {
         
         for item in items {
             if item.hasPrefix("nssl") {
-                // this is a picture to load!
+                // this is the picture to load!
                 pictures.append(item)
             }
         }
@@ -40,7 +40,7 @@ class ViewController: UITableViewController {
         return pictures.count
     }
     
-    // table view cells are reused when they are go off the sceeen
+    // dequeueReusableCell - table view cells are reused when they are go off the sceeen
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Picture", for: indexPath)
         cell.textLabel?.text = pictures.sorted()[indexPath.row]
