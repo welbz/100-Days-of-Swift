@@ -11,6 +11,16 @@
 // www.hackingwithswift.com/100/43
 // www.hackingwithswift.com/100/44
 
+//  Project 10 - Challenges
+// https://www.hackingwithswift.com/read/10/7/wrap-up
+/*
+ 1 - Add a second UIAlertController action that gets shown when the user taps a picture, asking them whether they want to rename the person or delete them.
+ 
+ 2 - Try using picker.sourceType = .camera when creating your image picker, which will tell it to create a new image by taking a photo. This is only available on devices (not on the simulator) so you might want to check the return value of UIImagePickerController.isSourceTypeAvailable() before trying to use it!
+ 
+ 3 - Modify project 1 so that it uses a collection view controller rather than a table view controller. I recommend you keep a copy of your original table view controller code so you can refer back to it later on.
+ */
+
 
 import UIKit
 
@@ -27,7 +37,9 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     
     var people = [Person]()
     /*
-     Every time we add a new person, we need to create a new Person object with their details. This is as easy as modifying our initial image picker success method so that it creates a Person object, adds it to our people array, then reloads the collection view
+     Every time we add a new person, we need to create a new Person object with their details.
+     This is as easy as modifying our initial image picker success method so that it creates a Person object,
+     adds it to our people array, then reloads the collection view
      */
     
     
@@ -61,20 +73,24 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         cell.imageView.layer.cornerRadius = 3
         cell.layer.cornerRadius = 7
         
-        
-        
         // if we're still here it means we got a PersonCell, so we can return it
         return cell
     }
     
-    // MARK: - Project10 - Challenge 2 -
-    //Try using picker.sourceType = .camera which will tell it to create a new image by taking a photo. This is only available on devices
-    // Had to add access to info plist
+    
     @objc func addNewPerson() {
         let picker = UIImagePickerController()
         picker.allowsEditing = true // allows editing
         picker.delegate = self // assign ourself as delegate
-        picker.sourceType = .camera
+        
+        // MARK: - Project10 - Challenge 2 -
+        // This is only available on devices - Need to add access to info plist first
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            picker.sourceType = .camera
+        } else {
+            picker.sourceType = .photoLibrary
+        }
+        
         present(picker, animated: true) // display
     }
     
@@ -95,10 +111,11 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         people.append(person)
         collectionView.reloadData()
         /*
-         That stores the image name in the Person object and gives them a default name of "Unknown", before reloading the collection view
+         Stores the image name in the Person object and gives them a default name of "Unknown", before reloading the collection view
          */
         
-        dismiss(animated: true) // dismiss the top most viewController (imagePicker)
+        // dismiss the top most viewController (imagePicker)
+        dismiss(animated: true)
     }
     
     func getDocumentsDirectory() -> URL {
@@ -110,17 +127,32 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         let person = people[indexPath.item]
         
         // MARK: - Project10 - Challenge 1 -
-        let ac = UIAlertController(title: "Rename person", message: nil, preferredStyle: .alert)
+        let ac = UIAlertController(title: "Rename or Delete Image", message: nil, preferredStyle: .alert)
         ac.addTextField()
         
-        ac.addAction(UIAlertAction(title: "OK", style: .default) { [weak self, weak ac] _ in
+        ac.addAction(UIAlertAction(title: "Rename", style: .default) {
+            [weak self, weak ac] _ in
             guard let newName = ac?.textFields?[0].text else { return }
-            person.name = newName
-            self?.collectionView.reloadData()
-        })
             
+            if newName.isEmpty || newName == " " {
+                return
+            } else {
+            person.name = newName
+            
+            self?.collectionView.reloadData()
+            }
+        })
+        
+        ac.addAction(UIAlertAction(title: "Delete", style: .destructive) {
+                    [weak self] _ in
+                    self?.people.remove(at: indexPath.item)
+                    
+                    self?.collectionView.reloadData()
+                })
+                
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(ac, animated: true)
+        
     }
 }
 
