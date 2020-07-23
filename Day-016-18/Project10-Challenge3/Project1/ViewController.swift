@@ -7,7 +7,6 @@
 //
 
 /*
- 
 Removed - Changed from tableView to CollectionView
 
 import UIKit

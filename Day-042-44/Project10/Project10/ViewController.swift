@@ -156,3 +156,8 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     }
 }
 
+// MARK: - Collection view code - write meaningful messages for future searching
+extension ViewController {
+    // move functions etc here
+    
+}

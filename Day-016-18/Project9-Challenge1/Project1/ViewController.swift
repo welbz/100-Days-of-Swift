@@ -1,7 +1,6 @@
 //
 //  ViewController.swift
 //  Project 9 - Challenge 1 (Copy of Project1)
-//
 //  Created by Welby Jennings on 23/5/20.
 //  Copyright © 2020 Zake Media Pty Ltd. All rights reserved.
 //
@@ -10,6 +9,7 @@ import UIKit
 
 class ViewController: UITableViewController {
     var pictures = [String]()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

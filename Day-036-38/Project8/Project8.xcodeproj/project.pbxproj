@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA9F6A2424C5AE8C00D73082 /* level1.txt in Resources */ = {isa = PBXBuildFile; fileRef = DA9F6A2324C5AE8C00D73082 /* level1.txt */; };
 		DAC78770249783F700DCB522 /* level2.txt in Resources */ = {isa = PBXBuildFile; fileRef = DAC7876E249783F700DCB522 /* level2.txt */; };
-		DAC78771249783F700DCB522 /* level1.txt in Resources */ = {isa = PBXBuildFile; fileRef = DAC7876F249783F700DCB522 /* level1.txt */; };
 		DAE301F324963E9C00E3D324 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE301F224963E9C00E3D324 /* AppDelegate.swift */; };
 		DAE301F524963E9C00E3D324 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE301F424963E9C00E3D324 /* SceneDelegate.swift */; };
 		DAE301F724963E9C00E3D324 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE301F624963E9C00E3D324 /* ViewController.swift */; };
@@ -18,8 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DA9F6A2324C5AE8C00D73082 /* level1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level1.txt; sourceTree = "<group>"; };
 		DAC7876E249783F700DCB522 /* level2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level2.txt; sourceTree = "<group>"; };
-		DAC7876F249783F700DCB522 /* level1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level1.txt; sourceTree = "<group>"; };
 		DAE301EF24963E9C00E3D324 /* Project8.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project8.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAE301F224963E9C00E3D324 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAE301F424963E9C00E3D324 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -67,7 +67,7 @@
 				DAE301FB24963E9D00E3D324 /* Assets.xcassets */,
 				DAE301FD24963E9D00E3D324 /* LaunchScreen.storyboard */,
 				DAE3020024963E9D00E3D324 /* Info.plist */,
-				DAC7876F249783F700DCB522 /* level1.txt */,
+				DA9F6A2324C5AE8C00D73082 /* level1.txt */,
 				DAC7876E249783F700DCB522 /* level2.txt */,
 			);
 			path = Project8;
@@ -131,7 +131,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DAC78771249783F700DCB522 /* level1.txt in Resources */,
+				DA9F6A2424C5AE8C00D73082 /* level1.txt in Resources */,
 				DAE301FF24963E9D00E3D324 /* LaunchScreen.storyboard in Resources */,
 				DAE301FC24963E9D00E3D324 /* Assets.xcassets in Resources */,
 				DAC78770249783F700DCB522 /* level2.txt in Resources */,

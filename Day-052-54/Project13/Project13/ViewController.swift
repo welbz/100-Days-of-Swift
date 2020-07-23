@@ -30,7 +30,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         context = CIContext()
         currentFilter = CIFilter(name: "CISepiaTone") // Sepia effect
-        
     }
     
     

@@ -121,7 +121,8 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         let ac = UIAlertController(title: "Rename person", message: nil, preferredStyle: .alert)
         ac.addTextField()
         
-        ac.addAction(UIAlertAction(title: "OK", style: .default) { [weak self, weak ac] _ in
+        ac.addAction(UIAlertAction(title: "OK", style: .default) {
+            [weak self, weak ac] _ in
             guard let newName = ac?.textFields?[0].text else { return }
             person.name = newName
             

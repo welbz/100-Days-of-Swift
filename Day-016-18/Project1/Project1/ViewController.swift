@@ -1,7 +1,6 @@
 //
 //  ViewController.swift
-//  Project1
-//
+//  Project1 (original)
 //  Created by Welby Jennings on 23/5/20.
 //  Copyright © 2020 Zake Media Pty Ltd. All rights reserved.
 //

@@ -10,7 +10,7 @@
 
 import UIKit
 
-// Needed to use classes to be able to confirm to NSCoding
+// Needed to use classes to be able to conform to NSCoding
 class Person: NSObject, NSCoding {
     var name: String
     var image: String
