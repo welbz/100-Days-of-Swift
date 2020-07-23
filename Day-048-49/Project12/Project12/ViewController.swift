@@ -41,6 +41,7 @@ class ViewController: UIViewController {
          object(forKey:) returns Any? so you need to conditionally typecast it to your data type.
          */
         
+        let savedString = defaults.string(forKey: "Name")
         let savedInteger = defaults.integer(forKey: "Age")
         let savedBool = defaults.bool(forKey: "UseFaceID")
         

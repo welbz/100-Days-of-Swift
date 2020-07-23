@@ -11,11 +11,35 @@ import UIKit
 class ViewController: UITableViewController {
     var allWords = [String]()
     var usedWords = [String]()
+    var chosenWord = "default"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Challenge 3
+        print(chosenWord)
+        print(usedWords)
+        
+        // For Testing purposes
+        //resetDefaults()
+        
+        // MARK: Project12 - Challenge 3
+        // Reading from UserDefaults
+        let defaults = UserDefaults.standard
+        let savedChosenWord = defaults.string(forKey: "chosenWord")
+        chosenWord = savedChosenWord ?? "nothing"
+        //print("Startup word is \(chosenWord ?? "Rubbish String")")
+        //defaults.set(savedChosenWord, forKey: "chosenWord")
+        
+        
+//        if !usedWords.isEmpty {
+//            let savedUsedWords = defaults.object(forKey: "usedWords") as? [String] ?? [String]()
+//            usedWords = savedUsedWords ?? ["Rubbish Array"]
+//        } else {
+//            usedWords = [""]
+//        }
+//        print(usedWords)
+        
+        // MARK: Challenge 3
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .redo, target: self, action: #selector(startGame))
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(promptForAnswer))
@@ -31,13 +55,24 @@ class ViewController: UITableViewController {
             allWords = ["Silkworm"]
         }
         
+        
+        
+        
         startGame() // call it at end of ViewDidLoad
     }
     
     @objc func startGame() { // needs @objc since its called from nav bar
-        title = allWords.randomElement() // sets VC title to a random word
-        usedWords.removeAll(keepingCapacity: true) // removes all values from usedWords array
-        tableView.reloadData() // Calls reload data method - asks to reload all rows from scratch - good for changing levels in game
+        if chosenWord.isEmpty {
+            title = allWords.randomElement()
+        } else {
+            title = chosenWord
+        }
+        print("Zee chosen one is \(chosenWord)")
+        
+        
+        //usedWords.removeAll(keepingCapacity: true) // removes all values from usedWords array
+        
+        // tableView.reloadData() // Calls reload data method - asks to reload all rows from scratch - good for changing levels in game
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -74,11 +109,17 @@ class ViewController: UITableViewController {
         if isPossible(word: lowerAnswer) {
             if isOrignal(word: lowerAnswer) {
                 if isReal(word: lowerAnswer) {
-                    // Challenge 4 - Bonus Bug insert answer should be lowerAnswer
+                    // MARK: Challenge 4 - Bonus Bug insert answer should be lowerAnswer
                     usedWords.insert(lowerAnswer, at: 0) // inserts at top of table
                     
                     let indexPath = IndexPath(row: 0, section: 0) // inserts a row at 0 in section 0
                     tableView.insertRows(at: [indexPath], with: .automatic) // adding 1 cell is easier than reloading whole table
+                    
+                    // MARK: Project12 - Challenge 3
+                    // Write to UserDefaults
+                    let defaults = UserDefaults.standard
+                    defaults.set(lowerAnswer, forKey: "usedWords")
+                    print("The usedWords are \(usedWords)")
                     
                     return // if is fine, it exits before alerts show
                     
@@ -116,27 +157,35 @@ class ViewController: UITableViewController {
     }
     
     func isReal(word: String) -> Bool {
-            let checker = UITextChecker() //UIKit spell checker - not good for Swift strings
-            let range  = NSRange(location: 0, length: word.utf16.count)
-            // Range to scan - start at 0 and scan full length of word - uses Object C string utf16.count cause of backwards compatability
-            // UIKit / SpriteKit - Always use utf16.count for the character count
-            // Swift or own code - Can use .count
-            
-            let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
-            // word is String to scan, range is how much of the range to scan, language is the dictionary to check the word against
-            
-            // Challenge 1
-            if word.utf16.count < 3 {return false}
-            if word == title {return false}
-            
-            return misspelledRange.location == NSNotFound
-            // tells us the word is spelled correctly
-        }
-    
-    // Challenge 2
-    func showErrorMessage(title: String, message: String) {
-            let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "Ok", style: .default))
-            present(ac, animated: true)
-        }
+        let checker = UITextChecker() //UIKit spell checker - not good for Swift strings
+        let range  = NSRange(location: 0, length: word.utf16.count)
+        // Range to scan - start at 0 and scan full length of word - uses Object C string utf16.count cause of backwards compatability
+        // UIKit / SpriteKit - Always use utf16.count for the character count
+        // Swift or own code - Can use .count
+        
+        let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
+        // word is String to scan, range is how much of the range to scan, language is the dictionary to check the word against
+        
+        // MARK: Challenge 1
+        if word.utf16.count < 3 {return false}
+        if word == title {return false}
+        
+        return misspelledRange.location == NSNotFound
+        // tells us the word is spelled correctly
     }
+    
+    // MARK: Challenge 2
+    func showErrorMessage(title: String, message: String) {
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Ok", style: .default))
+        present(ac, animated: true)
+    }
+    
+    // For testing
+    func resetDefaults() {
+        UserDefaults.standard.removePersistentDomain(forName: "chosenWord")
+        UserDefaults.standard.removePersistentDomain(forName: "usedWords")
+        UserDefaults.standard.synchronize()
+    }
+    
+}
