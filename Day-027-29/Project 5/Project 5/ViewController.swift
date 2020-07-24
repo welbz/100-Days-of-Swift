@@ -11,13 +11,10 @@ import UIKit
 class ViewController: UITableViewController {
     var allWords = [String]()
     var usedWords = [String]()
-    var chosenWord = "default"
+    var chosenWord: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print(chosenWord)
-        print(usedWords)
         
         // For Testing purposes
         //resetDefaults()
@@ -25,25 +22,20 @@ class ViewController: UITableViewController {
         // MARK: Project12 - Challenge 3
         // Reading from UserDefaults
         let defaults = UserDefaults.standard
-        let savedChosenWord = defaults.string(forKey: "chosenWord")
-        chosenWord = savedChosenWord ?? "nothing"
-        //print("Startup word is \(chosenWord ?? "Rubbish String")")
-        //defaults.set(savedChosenWord, forKey: "chosenWord")
         
+        if let savedChosenWord = defaults.string(forKey: "chosenWord") {
+        chosenWord = savedChosenWord
+        print("Startup word is \(chosenWord)")
+        }
         
-//        if !usedWords.isEmpty {
-//            let savedUsedWords = defaults.object(forKey: "usedWords") as? [String] ?? [String]()
-//            usedWords = savedUsedWords ?? ["Rubbish Array"]
-//        } else {
-//            usedWords = [""]
-//        }
-//        print(usedWords)
+        if let savedUsedWords = defaults.object(forKey: "usedWords") as? [String] ?? ["1", "2","3"] {
+        usedWords = savedUsedWords
+        print("Startup array is \(usedWords)")
+        }
         
         // MARK: Challenge 3
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .redo, target: self, action: #selector(startGame))
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(promptForAnswer))
-        
         
         if let startWordsURL = Bundle.main.url(forResource: "start", withExtension: "txt") {
             if let startWords = try? String(contentsOf: startWordsURL) {
@@ -55,24 +47,29 @@ class ViewController: UITableViewController {
             allWords = ["Silkworm"]
         }
         
-        
-        
-        
-        startGame() // call it at end of ViewDidLoad
+        startGame()
     }
     
     @objc func startGame() { // needs @objc since its called from nav bar
         if chosenWord.isEmpty {
             title = allWords.randomElement()
+            
+            // MARK: Project12 - Challenge 3
+            // Write chosenWord to UserDefaults
+            chosenWord = title!
+            let defaults = UserDefaults.standard
+            defaults.set(chosenWord, forKey: "chosenWord")
         } else {
             title = chosenWord
         }
-        print("Zee chosen one is \(chosenWord)")
         
+        print("Zee past chosenWord is \(chosenWord)")
+        print("The past usedWords are \(usedWords)")
         
-        //usedWords.removeAll(keepingCapacity: true) // removes all values from usedWords array
+        // removes all values from usedWords array
+        //usedWords.removeAll(keepingCapacity: true)
         
-        // tableView.reloadData() // Calls reload data method - asks to reload all rows from scratch - good for changing levels in game
+        tableView.reloadData() // reload all rows from scratch - good for changing levels in game
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -103,23 +100,25 @@ class ViewController: UITableViewController {
     func submit(_ answer: String) {
         let lowerAnswer = answer.lowercased() // make lowercase
         
-        let errorTitle = ""
-        let errorMessage = ""
+        let errorTitle = "Default errorTitle"
+        let errorMessage = "Default errorMessage"
         
         if isPossible(word: lowerAnswer) {
             if isOrignal(word: lowerAnswer) {
                 if isReal(word: lowerAnswer) {
+                    
                     // MARK: Challenge 4 - Bonus Bug insert answer should be lowerAnswer
                     usedWords.insert(lowerAnswer, at: 0) // inserts at top of table
+                    
+                    // Save to userDefaults
+                    saveArray(saveWord: lowerAnswer)
+                    // print(usedWords)
                     
                     let indexPath = IndexPath(row: 0, section: 0) // inserts a row at 0 in section 0
                     tableView.insertRows(at: [indexPath], with: .automatic) // adding 1 cell is easier than reloading whole table
                     
-                    // MARK: Project12 - Challenge 3
-                    // Write to UserDefaults
-                    let defaults = UserDefaults.standard
-                    defaults.set(lowerAnswer, forKey: "usedWords")
-                    print("The usedWords are \(usedWords)")
+                    
+                    //tableView.reloadData()
                     
                     return // if is fine, it exits before alerts show
                     
@@ -173,6 +172,19 @@ class ViewController: UITableViewController {
         return misspelledRange.location == NSNotFound
         // tells us the word is spelled correctly
     }
+    
+    func saveArray(saveWord: String) {
+        // MARK: Project12 - Challenge 3
+        // Write to UserDefaults
+        let defaults = UserDefaults.standard
+        print("The saveWord is \(saveWord)")
+        
+        //let savedUsedWords = usedWords.append(saveWord)
+        defaults.set(saveWord, forKey: "usedWords")
+        print("The usedWords are \(usedWords)")
+        //print("The savedUsedWords are \(savedUsedWords)")
+    }
+    
     
     // MARK: Challenge 2
     func showErrorMessage(title: String, message: String) {
