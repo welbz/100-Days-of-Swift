@@ -16,9 +16,6 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // For Testing purposes
-        //resetDefaults()
-        
         // MARK: Project12 - Challenge 3
         // Reading from UserDefaults
         let defaults = UserDefaults.standard
@@ -28,7 +25,7 @@ class ViewController: UITableViewController {
         print("Startup word is \(chosenWord)")
         }
         
-        if let savedUsedWords = defaults.object(forKey: "usedWords") as? [String] ?? ["1", "2","3"] {
+        if let savedUsedWords = defaults.object(forKey: "usedWords") as? [String] ?? [""] {
         usedWords = savedUsedWords
         print("Startup array is \(usedWords)")
         }
@@ -108,17 +105,20 @@ class ViewController: UITableViewController {
                 if isReal(word: lowerAnswer) {
                     
                     // MARK: Challenge 4 - Bonus Bug insert answer should be lowerAnswer
-                    usedWords.insert(lowerAnswer, at: 0) // inserts at top of table
+                    usedWords.insert(lowerAnswer, at: 0) // inserts at 0 of array
+                    print("before save \(usedWords)")
                     
+                    // MARK: Project12 - Challenge 3
                     // Save to userDefaults
                     saveArray(saveWord: lowerAnswer)
-                    // print(usedWords)
+                    print("after save \(usedWords)")
+                    
                     
                     let indexPath = IndexPath(row: 0, section: 0) // inserts a row at 0 in section 0
                     tableView.insertRows(at: [indexPath], with: .automatic) // adding 1 cell is easier than reloading whole table
                     
                     
-                    //tableView.reloadData()
+                    tableView.reloadData()
                     
                     return // if is fine, it exits before alerts show
                     
@@ -179,10 +179,10 @@ class ViewController: UITableViewController {
         let defaults = UserDefaults.standard
         print("The saveWord is \(saveWord)")
         
-        //let savedUsedWords = usedWords.append(saveWord)
-        defaults.set(saveWord, forKey: "usedWords")
-        print("The usedWords are \(usedWords)")
-        //print("The savedUsedWords are \(savedUsedWords)")
+        let savedUsedWords = usedWords
+        print("The savedUsedWords array is \(savedUsedWords)")
+        
+        defaults.set(savedUsedWords, forKey: "usedWords")
     }
     
     
@@ -196,7 +196,7 @@ class ViewController: UITableViewController {
     // For testing
     func resetDefaults() {
         UserDefaults.standard.removePersistentDomain(forName: "chosenWord")
-        UserDefaults.standard.removePersistentDomain(forName: "usedWords")
+        //UserDefaults.standard.removePersistentDomain(forName: "usedWords")
         UserDefaults.standard.synchronize()
     }
     
