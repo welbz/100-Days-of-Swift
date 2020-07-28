@@ -10,8 +10,11 @@ import SpriteKit
 
 
 class GameScene: SKScene {
+    var slots = [WhackSlot]() // array to store all slots
     var gameScore: SKLabelNode!
+    
     var popupTime = 0.85
+    var numRounds = 0
     
     var score = 0 {
         didSet {
@@ -19,7 +22,7 @@ class GameScene: SKScene {
         }
     }
     
-    var slots = [WhackSlot]() // array to store all slots
+    
     
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "whackBackground")
@@ -48,7 +51,37 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else { return }
         
+        let location = touch.location(in: self) // where they tap screen
+        let tappedNodes = nodes(at: location)
+        
+        for node in tappedNodes {
+            // See notes below - read grandparent of thing that was tapped
+            guard let whackSlot = node.parent?.parent as? WhackSlot else { continue }
+            
+            if !whackSlot.isVisible { continue }
+            if whackSlot.isHit { continue }
+            
+            whackSlot.hit()
+            
+            if node.name == "charFriend" {
+                // they shoudnt have whacked the pengiun
+                score -= 5
+                
+                // play sound
+                run(SKAction.playSoundFileNamed("whackBad.caf", waitForCompletion: false))
+                
+            } else if node.name == "charEnemy" {
+                // they should have whacked this one
+                whackSlot.charNode.xScale = 0.85 // makes them slightly smaller in size
+                whackSlot.charNode.yScale = 0.85 // makes them slightly smaller in size
+                score += 1
+                
+                // play sound
+                run(SKAction.playSoundFileNamed("whackBad.caf", waitForCompletion: false))
+            }
+        }
     }
     
     // func to create the slots
@@ -60,6 +93,22 @@ class GameScene: SKScene {
     }
     
     func createEnemy() {
+        numRounds += 1
+        
+        if numRounds >= 30 {
+            for slot in slots {
+                slot.hide()
+            }
+            
+            let gameOver = SKSpriteNode(imageNamed: "gameOver")
+            gameOver.position = CGPoint(x: 512, y: 384)
+            gameOver.zPosition = 1
+            addChild(gameOver)
+            return // stop calling create enemy now
+        }
+        
+        
+        
         popupTime *= 0.991
         
         slots.shuffle()
@@ -79,3 +128,9 @@ class GameScene: SKScene {
         }
     }
 }
+
+/*
+ guard let whackSlot = node.parent?.parent as? WhackSlot else { continue }
+ 
+ It gets the parent of the parent of the node, and typecasts it as a WhackSlot. This line is needed because the player has tapped the penguin sprite node, not the slot – we need to get the parent of the penguin, which is the crop node it sits inside, then get the parent of the crop node, which is the WhackSlot object, which is what this code does.
+ */
