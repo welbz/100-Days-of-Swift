@@ -13,25 +13,24 @@ class ViewController: UIViewController {
     var answerLabel: UILabel!
     var currentAnswer: UITextField!
     var scoreLabel: UILabel!
-    var LetterButtons = [UIButton]()
     
     // Buttons
+    var LetterButtons = [UIButton]()
     var activatedButtons = [UIButton]()
     var solutions = [String]()
     
     // Scores
     var score = 0 {
         didSet {
-            scoreLabel.text = "Score: \(score)" // anytime this is changes it will be updated
+            scoreLabel.text = "Score: \(score)"
+            // anytime this is changes it will be updated
         }
     }
     
-    // MARK: - Challenge 3 -
+    // MARK: - Challenge 3
     var numberOfMatches = 0
     
-    
     var level = 1
-    
     
     override func loadView() {
         view = UIView() // parent of all view types
