@@ -55,6 +55,11 @@ class WhackSlot: SKNode {
             charNode.name = "charEnemy"
         }
         
+        // MARK: - Project 14 Challenge 3b
+        if let muddyPenguins = SKEmitterNode(fileNamed: "muddyPenguins") {
+            addChild(muddyPenguins)
+        }
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + (hideTime * 3.5)) {
             [weak self] in
             self?.hide()
@@ -65,6 +70,12 @@ class WhackSlot: SKNode {
         if !isVisible { return }
         
         charNode.run(SKAction.moveBy(x: 0, y: -80, duration: 0.05))
+        
+        // MARK: - Project 14 Challenge 3b
+        if let muddyPenguins = SKEmitterNode(fileNamed: "muddyPenguins") {
+            addChild(muddyPenguins)
+        }
+        
         isVisible = false
     }
     
@@ -76,6 +87,12 @@ class WhackSlot: SKNode {
         let notVisible = SKAction.run { [weak self] in self?.isVisible = false }
         let sequence = SKAction.sequence([delay, hide, notVisible])
         charNode.run(sequence)
+        
+        // MARK: - Project 14 Challenge 3a
+        if let smokeyPenguins = SKEmitterNode(fileNamed: "smokeyPenguins") {
+            //smokeyPenguins.position = charNode.position
+            addChild(smokeyPenguins)
+        }
     }
 }
 

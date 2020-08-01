@@ -12,6 +12,7 @@ import SpriteKit
 class GameScene: SKScene {
     var slots = [WhackSlot]() // array to store all slots
     var gameScore: SKLabelNode!
+    var finalGameScore: SKLabelNode!
     
     var popupTime = 0.85
     var numRounds = 0
@@ -21,8 +22,6 @@ class GameScene: SKScene {
             gameScore.text = "Score: \(score)"
         }
     }
-    
-    
     
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "whackBackground")
@@ -104,9 +103,22 @@ class GameScene: SKScene {
             gameOver.position = CGPoint(x: 512, y: 384)
             gameOver.zPosition = 1
             addChild(gameOver)
+            
+            // MARK: - Project 14 Challenge 2
+            finalGameScore = SKLabelNode(fontNamed: "New York-Bold")
+            finalGameScore.text = "Your Final Score: \(score)"
+            finalGameScore.position = CGPoint(x: 512, y: 260)
+            finalGameScore.horizontalAlignmentMode = .center
+            finalGameScore.fontSize = 60
+            addChild(finalGameScore)
+            
+            // MARK: - Project 14 Challenge 1
+            // Record your own voice saying "Game over!" and have it play when the game ends.
+            // play sound
+            run(SKAction.playSoundFileNamed("whackBad.caf", waitForCompletion: false))
+            
             return // stop calling create enemy now
         }
-        
         
         
         popupTime *= 0.991
