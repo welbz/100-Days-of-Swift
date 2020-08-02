@@ -17,6 +17,9 @@
 		DA431F2B24CE878A000EFE56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA431F2A24CE878A000EFE56 /* Assets.xcassets */; };
 		DA437BCF24D036FE0092151C /* Notes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA437BCE24D036FE0092151C /* Notes.swift */; };
 		DA44E5A124CF03F40067618B /* WhackSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA44E5A024CF03F40067618B /* WhackSlot.swift */; };
+		DA87A05524D6A62300C3378D /* whack.caf in Resources */ = {isa = PBXBuildFile; fileRef = DA87A05324D6A62300C3378D /* whack.caf */; };
+		DA87A05624D6A62300C3378D /* whackBad.caf in Resources */ = {isa = PBXBuildFile; fileRef = DA87A05424D6A62300C3378D /* whackBad.caf */; };
+		DA87A05824D6A83D00C3378D /* gameover.caf in Resources */ = {isa = PBXBuildFile; fileRef = DA87A05724D6A83D00C3378D /* gameover.caf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,10 +33,11 @@
 		DA431F2824CE8788000EFE56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DA431F2A24CE878A000EFE56 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA431F2C24CE878A000EFE56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DA431F3224CE88B2000EFE56 /* whackBad.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = whackBad.caf; sourceTree = "<group>"; };
-		DA431F3324CE88B2000EFE56 /* whack.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = whack.caf; sourceTree = "<group>"; };
 		DA437BCE24D036FE0092151C /* Notes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notes.swift; sourceTree = "<group>"; };
 		DA44E5A024CF03F40067618B /* WhackSlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhackSlot.swift; sourceTree = "<group>"; };
+		DA87A05324D6A62300C3378D /* whack.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = whack.caf; sourceTree = "<group>"; };
+		DA87A05424D6A62300C3378D /* whackBad.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = whackBad.caf; sourceTree = "<group>"; };
+		DA87A05724D6A83D00C3378D /* gameover.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = gameover.caf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,10 +79,11 @@
 				DA431F2724CE8788000EFE56 /* Main.storyboard */,
 				DA431F2A24CE878A000EFE56 /* Assets.xcassets */,
 				DA431F2C24CE878A000EFE56 /* Info.plist */,
-				DA431F3324CE88B2000EFE56 /* whack.caf */,
 				DA42952824D5C13100813948 /* smokeyPenguins.sks */,
 				DA42952C24D5C1D700813948 /* muddyPenguins.sks */,
-				DA431F3224CE88B2000EFE56 /* whackBad.caf */,
+				DA87A05324D6A62300C3378D /* whack.caf */,
+				DA87A05424D6A62300C3378D /* whackBad.caf */,
+				DA87A05724D6A83D00C3378D /* gameover.caf */,
 			);
 			path = Project14;
 			sourceTree = "<group>";
@@ -141,7 +146,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA431F2924CE8788000EFE56 /* Main.storyboard in Resources */,
+				DA87A05624D6A62300C3378D /* whackBad.caf in Resources */,
+				DA87A05824D6A83D00C3378D /* gameover.caf in Resources */,
 				DA431F2024CE8788000EFE56 /* GameScene.sks in Resources */,
+				DA87A05524D6A62300C3378D /* whack.caf in Resources */,
 				DA42952D24D5C1D700813948 /* muddyPenguins.sks in Resources */,
 				DA42952924D5C13100813948 /* smokeyPenguins.sks in Resources */,
 				DA431F2B24CE878A000EFE56 /* Assets.xcassets in Resources */,

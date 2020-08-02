@@ -10,18 +10,17 @@ import SpriteKit
 
 
 class GameScene: SKScene {
-    var slots = [WhackSlot]() // array to store all slots
     var gameScore: SKLabelNode!
     var finalGameScore: SKLabelNode!
-    
-    var popupTime = 0.85
-    var numRounds = 0
-    
     var score = 0 {
         didSet {
             gameScore.text = "Score: \(score)"
         }
     }
+    
+    var slots = [WhackSlot]() // array to store all slots
+    var popupTime = 0.85
+    var numRounds = 0
     
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "whackBackground")
@@ -67,18 +66,13 @@ class GameScene: SKScene {
             if node.name == "charFriend" {
                 // they shoudnt have whacked the pengiun
                 score -= 5
-                
-                // play sound
                 run(SKAction.playSoundFileNamed("whackBad.caf", waitForCompletion: false))
-                
             } else if node.name == "charEnemy" {
                 // they should have whacked this one
                 whackSlot.charNode.xScale = 0.85 // makes them slightly smaller in size
                 whackSlot.charNode.yScale = 0.85 // makes them slightly smaller in size
                 score += 1
-                
-                // play sound
-                run(SKAction.playSoundFileNamed("whackBad.caf", waitForCompletion: false))
+                run(SKAction.playSoundFileNamed("whack.caf", waitForCompletion:false))
             }
         }
     }
@@ -104,8 +98,10 @@ class GameScene: SKScene {
             gameOver.zPosition = 1
             addChild(gameOver)
             
+            
+            
             // MARK: - Project 14 Challenge 2
-            finalGameScore = SKLabelNode(fontNamed: "New York-Bold")
+            finalGameScore = SKLabelNode(fontNamed: "SF Pro Display")
             finalGameScore.text = "Your Final Score: \(score)"
             finalGameScore.position = CGPoint(x: 512, y: 260)
             finalGameScore.horizontalAlignmentMode = .center
@@ -114,8 +110,7 @@ class GameScene: SKScene {
             
             // MARK: - Project 14 Challenge 1
             // Record your own voice saying "Game over!" and have it play when the game ends.
-            // play sound
-            run(SKAction.playSoundFileNamed("whackBad.caf", waitForCompletion: false))
+            run(SKAction.playSoundFileNamed("gameover.caf", waitForCompletion: false))
             
             return // stop calling create enemy now
         }
