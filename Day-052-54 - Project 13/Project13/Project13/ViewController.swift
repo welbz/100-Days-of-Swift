@@ -52,7 +52,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
         dismiss(animated: true) // dismiss immediately image picker controller
-        currentImage = image
+        
+        // MARK: Project 15 - Challenge 2
+        UIView.animate(withDuration: 3, delay: 0, usingSpringWithDamping: 0, initialSpringVelocity: 5, options: [], animations: {
+              
+            // TODO: - continue with this
+            self.currentImage = image
+            self.currentImage.alpha = 0 // can change alpha and background
+            self.currentImage.alpha = 1
+        })
+        
         // MARK: - Note
         /*
          where we set our currentImage image to be the one selected in the image picker. This is required so that we can have a copy of what was originally imported. Whenever the user changes filter, we need to put that original image back into the filter.
