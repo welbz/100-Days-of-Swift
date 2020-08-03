@@ -38,11 +38,14 @@ class ViewController: UIViewController {
 	}
 
 	@objc func letterTapped(btn: UIButton) {
-        // MARK:- Project 15 - Challenge 1
-        
-		currentAnswer.text = currentAnswer.text! + btn.titleLabel!.text!
+        currentAnswer.text = currentAnswer.text! + btn.titleLabel!.text!
 		activatedButtons.append(btn)
-		btn.isHidden = true
+		
+        // MARK:- Project 15 - Challenge 1
+        UIView.animate(withDuration: 0.5) {
+            btn.alpha = 0.0
+            }
+        //btn.isHidden = false
 	}
 
 	func loadLevel() {
@@ -107,7 +110,11 @@ class ViewController: UIViewController {
 		currentAnswer.text = ""
 
 		for btn in activatedButtons {
-			btn.isHidden = false
+            // MARK:- Project 15 - Challenge 1
+            UIView.animate(withDuration: 0.5) {
+                btn.alpha = 1.0
+                }
+            //btn.isHidden = false
 		}
 
 		activatedButtons.removeAll()
@@ -119,8 +126,12 @@ class ViewController: UIViewController {
 
 		loadLevel()
 
+        // MARK:- Project 15 - Challenge 1
 		for btn in letterButtons {
-			btn.isHidden = false
+            UIView.animate(withDuration: 0.5) {
+                btn.alpha = 1.0
+                }
+			//btn.isHidden = false
 		}
 	}
 

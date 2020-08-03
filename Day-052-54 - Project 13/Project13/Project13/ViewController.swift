@@ -23,13 +23,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     var currentImage: UIImage!
     var context: CIContext! // handles rendering
     var currentFilter: CIFilter! // filter - stores whatever filter usee has activatated
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "YACIFP"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(importPicture))
+        
+        // MARK: Project 15 - Challenge 2
+        self.imageView.alpha = 0.0
+        
         
         context = CIContext()
         currentFilter = CIFilter(name: "CISepiaTone")
@@ -53,14 +57,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         guard let image = info[.editedImage] as? UIImage else { return }
         dismiss(animated: true) // dismiss immediately image picker controller
         
+        self.currentImage = image
+        
         // MARK: Project 15 - Challenge 2
-        UIView.animate(withDuration: 3, delay: 0, usingSpringWithDamping: 0, initialSpringVelocity: 5, options: [], animations: {
-              
-            // TODO: - continue with this
-            self.currentImage = image
-            self.currentImage.alpha = 0 // can change alpha and background
-            self.currentImage.alpha = 1
-        })
+        UIView.animate(withDuration: 2) {
+            self.imageView.alpha = 1.0
+            }
         
         // MARK: - Note
         /*
