@@ -18,6 +18,8 @@ class ActionViewController: UIViewController {
         if let inputItem = extensionContext?.inputItems.first as? NSExtensionItem {
             if let itemProvider = inputItem.attachments?.first {
                 itemProvider.loadItem(forTypeIdentifier: kUTTypePropertyList as String) {
+                    // closure
+                    [weak self] (dict, error) in
                     // do stuff
                 }
             }
