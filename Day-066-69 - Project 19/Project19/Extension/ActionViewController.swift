@@ -9,8 +9,7 @@ import UIKit
 import MobileCoreServices
 
 class ActionViewController: UIViewController {
-
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet var script: UITextView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +19,10 @@ class ActionViewController: UIViewController {
                 itemProvider.loadItem(forTypeIdentifier: kUTTypePropertyList as String) {
                     // closure
                     [weak self] (dict, error) in
-                    // do stuff
+                    guard let itemDictionary = dict as? NSDictionary else {
+                        return }
+                    guard let javaScriptValues = itemDictionary[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary else { return }
+                    print(javaScriptValues)
                 }
             }
         }
