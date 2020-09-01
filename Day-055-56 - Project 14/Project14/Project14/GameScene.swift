@@ -110,7 +110,7 @@ class GameScene: SKScene {
             
             // MARK: - Project 14 Challenge 1
             // Record your own voice saying "Game over!" and have it play when the game ends.
-            run(SKAction.playSoundFileNamed("gameover.caf", waitForCompletion: false))
+            //run(SKAction.playSoundFileNamed("gameover.caf", waitForCompletion: false))
             
             return // stop calling create enemy now
         }
