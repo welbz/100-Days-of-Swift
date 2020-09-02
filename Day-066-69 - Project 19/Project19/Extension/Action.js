@@ -8,9 +8,10 @@ Action.prototype = {
     },
     
     
-    finalise: function(parameters) {
-        
-    },
+    finalize: function(parameters) {
+        var customJavaScript = parameters["customJavaScript"];
+        eval(customJavaScript); //run this code immediately
+    }
 };
 
 var ExtensionPreprocessingJS = new Action
