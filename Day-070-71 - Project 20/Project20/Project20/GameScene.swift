@@ -4,12 +4,12 @@
 //
 //  Created by Welby Jennings on 5/9/20.
 //  https://www.hackingwithswift.com/100/70
-    // https://www.hackingwithswift.com/read/20/1/setting-up
-    // https://www.hackingwithswift.com/read/20/2/ready-aim-fire-timer-and-follow
-    // https://www.hackingwithswift.com/read/20/3/swipe-to-select
+// https://www.hackingwithswift.com/read/20/1/setting-up
+// https://www.hackingwithswift.com/read/20/2/ready-aim-fire-timer-and-follow
+// https://www.hackingwithswift.com/read/20/3/swipe-to-select
 
 //  https://www.hackingwithswift.com/100/71
-    // https://www.hackingwithswift.com/read/20/4/making-things-go-bang-skemitternode
+// https://www.hackingwithswift.com/read/20/4/making-things-go-bang-skemitternode
 
 
 import SpriteKit
@@ -17,7 +17,7 @@ import SpriteKit
 class GameScene: SKScene {
     var gameTimer: Timer?
     var fireworks = [SKNode]()
-
+    
     let leftEdge = -22
     let bottomEdge = -22
     let rightEdge = 1024 + 22
@@ -28,7 +28,7 @@ class GameScene: SKScene {
         }
     }
     
-
+    
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "background")
         background.position = CGPoint(x: 512, y: 384)
@@ -44,7 +44,7 @@ class GameScene: SKScene {
     func createFirework(xMovement: CGFloat, x:Int, y:Int) {
         let node = SKNode()
         node.position = CGPoint(x: x, y: y)
-    
+        
         let firework = SKSpriteNode(imageNamed: "rocket")
         firework.colorBlendFactor = 1
         firework.name = "firework"
@@ -120,7 +120,7 @@ class GameScene: SKScene {
         
         // Where was touch
         let location = touch.location(in: self)
-
+        
         let nodesAtPoint = nodes(at: location)
         
         // find all SpriteNodes that are fireworks
@@ -171,5 +171,62 @@ class GameScene: SKScene {
         }
     }
     
+    /*
+     We need to create:
+     a method to explode a single firework
+     a method to explode all the fireworks (which will call the single firework explosion method)
+     code to detect and respond the device being shaken.
+     */
     
+    func explode(firework: SKNode) {
+        if let emmitter = SKEmitterNode(fileNamed: "explode") {
+            emmitter.position = firework.position
+            addChild(emmitter)
+        }
+        
+        firework.removeFromParent()
+    }
+    
+    
+    func explodeFireworks() {
+        var numExploded = 0
+        
+        for (index, fireworkContainer) in fireworks.enumerated().reversed() {
+            guard let firework = fireworkContainer.children.first as?
+                    SKSpriteNode else { continue }
+            
+            if firework.name == "selected" {
+                explode(firework: fireworkContainer)
+                fireworks.remove(at: index) // remove from array
+                numExploded += 1
+            }
+        }
+        
+        // switch based on how many explosions user gets
+        switch numExploded {
+        case 0:
+            break
+        case 1:
+            score += 200
+        case 2:
+            score += 500
+        case 3:
+            score += 1_500
+        case 4:
+            score += 2_500
+        default:
+            score += 4_000
+        }
+    }
 }
+
+
+
+// MARK: - Note
+/*
+ The explodeFireworks() method is only fractionally more complicated. It will be triggered when the user wants to set off their selected fireworks, so it needs to loop through the fireworks array (backwards again!), pick out any selected ones, then call explode() on it.
+ 
+ As I said earlier, the player's score needs to go up by more when they select more fireworks, so about half of the explodeFireworks() method is taken up with figuring out what score to give the player.
+ 
+ There's one small piece of extra complexity: remember, the fireworks array stores the firework container node, so we need to read the firework image out of its children array.
+ */
