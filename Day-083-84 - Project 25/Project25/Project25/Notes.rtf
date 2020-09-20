@@ -11,6 +11,7 @@
 Set the tag of the image view to be 1000, and here's why: all UIView subclasses have a method called viewWithTag(), which searches for any views inside itself (or indeed itself) with that tag number. We can find our image view just by using this method, although I'll still use if let and a conditional typecast to be sure. cellForItemAt\
 \
 \
+\
 
 \f0\b Multipeer connectivity
 \f1\b0 \
@@ -24,6 +25,7 @@ MCBrowserViewController is used when looking for sessions, showing users who is 
 We use all four of them in our app, but only three need to be properties.\
 \
 \
+\
 // 7\
 Depending on what users select in our alert controller, we need to call one of two methods:\'a0startHosting()\'a0or\'a0joinSession(). Because both of these are coming from the result of a\'a0UIAction\'a0being tapped, both methods must accept a\'a0UIAlertAction\'a0as their only parameter.\
 \
@@ -31,4 +33,28 @@ Before I show you the code to get multipeer connectivity up and running, I want 
 \
 Apple's example is, "a text chat app made by ABC company could use the service type\'a0abc-txtchat"; for this project I'll be using\'a0hws-project25.\
 \
-This service type is used by both\'a0MCAdvertiserAssistant\'a0and\'a0MCBrowserViewController\'a0to make sure your users only see other users of the same app. They both also want a reference to your\'a0MCSession\'a0instance so they can take care of connections for you.}
+This service type is used by both\'a0MCAdvertiserAssistant\'a0and\'a0MCBrowserViewController\'a0to make sure your users only see other users of the same app. They both also want a reference to your\'a0MCSession\'a0instance so they can take care of connections for you.\
+\
+\
+\
+\
+// 10 - session(_:didReceive:fromPeer:)\
+when we add a picture to the collection view it is shown on our screen but doesn't go anywhere. We're going to add some code to the image picker's didFinishPickingMediaWithInfo method so that when an image is added it also gets sent out to peers.\
+\
+Sending images across a multipeer connection is remarkably easy. In project 10 we used the function jpegData() to convert a UIImage object into a Data so it can be saved to disk, and here we\'92ll be using pngData() that does the same thing with the PNG image format. Once we have that, MCSession objects have a sendData() method that will ensure that data gets transmitted reliably to your peers.\
+\
+Once the data arrives at each peer, the method session(_:didReceive:fromPeer:) will get called with that data, at which point we can create a UIImage from it and add it to our images array. There is one catch: when you receive data it might not be on the main thread\
+\
+\
+\
+// 11\
+Take note of the call to async() to ensure we definitely only manipulate the user interface on the main thread!\
+\
+The final piece of code to finish up this whole project is the bit that sends image data to peers. This is so easy you might not even believe me. In fact, the code is only as long as it is because there's some error checking in there.\
+\
+This final code needs to:\
+1) Check if we have an active session we can use.\
+2) Check if there are any peers to send to.\
+3) Convert the new image to a Data object.\
+4) Send it to all peers, ensuring it gets delivered.\
+5) Show an error message if there's a problem.}
