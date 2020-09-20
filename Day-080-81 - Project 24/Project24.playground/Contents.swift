@@ -2,6 +2,8 @@ import UIKit
 
 // Project 24
 // https://www.hackingwithswift.com/100/80
+// https://www.hackingwithswift.com/100/81
+
 
 // Video 1
 // Strings are not arrays - https://www.hackingwithswift.com/read/24/2/strings-are-not-arrays
@@ -45,6 +47,8 @@ let letter2 = name[3]
 /*
 However, it creates the possibility that someone might write code that loops over a string reading individual letters, which they might not realize creates a loop within a loop and has the potential to be slow
  */
+
+
 
 
 // Video 2
@@ -129,6 +133,7 @@ In that code we’re passing input.contains as the closure that contains(where:)
 
 So, because the contains() method of strings has the exact same signature that contains(where:) expects (take a string and return a Boolean)
 */
+
 
 
 
