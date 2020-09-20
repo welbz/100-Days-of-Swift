@@ -13,6 +13,7 @@
 		DA25F92F2516F9840016D397 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA25F92D2516F9840016D397 /* Main.storyboard */; };
 		DA25F9312516F9860016D397 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA25F9302516F9860016D397 /* Assets.xcassets */; };
 		DA25F9342516F9860016D397 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA25F9322516F9860016D397 /* LaunchScreen.storyboard */; };
+		DADFC65E2517071700751F9A /* Notes.rtf in Resources */ = {isa = PBXBuildFile; fileRef = DADFC65D2517071700751F9A /* Notes.rtf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		DA25F9302516F9860016D397 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA25F9332516F9860016D397 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA25F9352516F9860016D397 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DADFC65D2517071700751F9A /* Notes.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Notes.rtf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				DA25F9272516F9840016D397 /* AppDelegate.swift */,
 				DA25F9292516F9840016D397 /* SceneDelegate.swift */,
 				DA25F92B2516F9840016D397 /* ViewController.swift */,
+				DADFC65D2517071700751F9A /* Notes.rtf */,
 				DA25F92D2516F9840016D397 /* Main.storyboard */,
 				DA25F9302516F9860016D397 /* Assets.xcassets */,
 				DA25F9322516F9860016D397 /* LaunchScreen.storyboard */,
@@ -125,6 +128,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA25F9342516F9860016D397 /* LaunchScreen.storyboard in Resources */,
+				DADFC65E2517071700751F9A /* Notes.rtf in Resources */,
 				DA25F9312516F9860016D397 /* Assets.xcassets in Resources */,
 				DA25F92F2516F9840016D397 /* Main.storyboard in Resources */,
 			);
