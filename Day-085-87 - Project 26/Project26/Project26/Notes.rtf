@@ -1,0 +1,21 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2569
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;}
+{\colortbl;\red255\green255\blue255;\red33\green33\blue33;}
+{\*\expandedcolortbl;;\cssrgb\c17255\c17255\c17255;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}}
+\paperw12240\paperh15840\margl1440\margr1440\vieww9000\viewh8400\viewkind0
+\deftab720
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sl432\sa200\partightenfactor0
+\ls1\ilvl0
+\f0\fs26\fsmilli13200 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 {\listtext	\uc0\u8226 	}The\'a0categoryBitMask\'a0property is a number defining the type of object this is for considering collisions.\
+{\listtext	\uc0\u8226 	}The\'a0collisionBitMask\'a0property is a number defining what categories of object this node should collide with,\
+{\listtext	\uc0\u8226 	}The\'a0contactTestBitMask\'a0property is a number defining which collisions we want to be notified about.\
+\ls1\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 \
+They all do very different things, although the distinction might seem fine before you fully understand. Category is simple enough: every node you want to reference in your collision bitmasks or your contact test bitmasks must have a category attached. If you give a node a collision bitmask but not a contact test bitmask, it means they will bounce off each other but you won't be notified. If you do the opposite (contact test but not collision) it means they won't bounce off each other but you will be told when they overlap.\
+By default, physics bodies have a collision bitmask that means "everything", so everything bounces off everything else. By default, they also have a contact test bitmask that means "nothing", so you'll never get told about collisions.\
+A bitmask is a complicated beast to explain, but what it means in practice is that you can combine values together. In our game, vortexes, stars and the finish flag all have the player set for their contact test bitmask, and the player has star and vortex and finish flag.\
+SpriteKit expects these three bitmasks to be described using a UInt32. It's a particular way of storing numbers, but rather than using numbers we're going to use enums with a raw value. This means we can refer to the various options using names.\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 \
+}
