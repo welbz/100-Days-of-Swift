@@ -12,7 +12,7 @@ enum ForceBomb {
     case never, always, random
 }
 
-enum sequenceType: CaseIterable {
+enum SequenceType: CaseIterable {
     case oneNoBomb, one, twoWithOneBomb, two, three, four, chain, fastChain
 }
 // CaseIterable. This is one of Swift’s most useful protocols, and it will automatically add an allCases property to the SequenceType enum that lists all its cases as an array
@@ -38,7 +38,7 @@ class GameScene: SKScene {
     var bombSoundEffect: AVAudioPlayer?
     
     var popupTime = 0.9
-    var sequence = [sequenceType]()
+    var sequence = [SequenceType]()
     var sequencePosition = 0
     var chainDelay = 3.0
     var nextSequenceQueued = true
@@ -49,7 +49,7 @@ class GameScene: SKScene {
         let background = SKSpriteNode(imageNamed: "sliceBackground")
         background.position = CGPoint(x: 512, y: 384)
         background.blendMode = .replace
-        background.zPosition = -1
+        background.zPosition = -10
         addChild(background)
         
         physicsWorld.gravity = CGVector(dx: 0, dy: -6)
@@ -62,7 +62,7 @@ class GameScene: SKScene {
         sequence = [.oneNoBomb, .oneNoBomb, .twoWithOneBomb, .twoWithOneBomb, .three, .one, .chain]
         
         for _ in 0...1000 {
-            if let nextSequence = sequenceType.allCases.randomElement() {
+            if let nextSequence = SequenceType.allCases.randomElement() {
                 sequence.append(nextSequence)
             }
             
@@ -347,6 +347,7 @@ class GameScene: SKScene {
                 DispatchQueue.main.asyncAfter(deadline: .now() + popupTime) {
                     [weak self] in
                     self?.tossEnemies()
+                    // check here
                 }
                 
                 nextSequenceQueued = true

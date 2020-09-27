@@ -1,0 +1,50 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2571
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;\f1\fnil\fcharset0 SFMono-Bold;\f2\fnil\fcharset0 HelveticaNeue-Italic;
+}
+{\colortbl;\red255\green255\blue255;\red33\green33\blue33;\red255\green255\blue255;\red184\green14\blue61;
+}
+{\*\expandedcolortbl;;\cssrgb\c17255\c17255\c17255;\cssrgb\c100000\c100000\c100000;\cssrgb\c78039\c14510\c30588;
+}
+\paperw12240\paperh15840\margl1440\margr1440\vieww9000\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\sl432\sa240\partightenfactor0
+
+\f0\fs26\fsmilli13200 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 The most important thing to understand is that, like Core Animation, Core Graphics sits at a lower technical level than UIKit. This means it doesn't understand classes you know like\'a0
+\f1\b \cf4 \strokec4 UIColor
+\f0\b0 \cf2 \strokec2 \'a0and\'a0
+\f1\b \cf4 \strokec4 UIBezierPath
+\f0\b0 \cf2 \strokec2 , so you either need to use their counterparts (
+\f1\b \cf4 \strokec4 CGColor
+\f0\b0 \cf2 \strokec2 \'a0and\'a0
+\f1\b \cf4 \strokec4 CGPath
+\f0\b0 \cf2 \strokec2 \'a0respectively), or use helper methods from UIKit that convert between the two.\
+\
+Second you need to understand that Core Graphics differentiates between creating a path and drawing a path. That is, you can add lines, squares and other shapes to a path as much as you want to, but none of it will do anything until you actually draw the path. Think of it like a simple state machine: you configure a set of states you want (colors, transforms, and so on), then perform actions. You can even maintain multiple states at a time by pushing and popping in order to backup and restore specific states.\
+\
+Finally, you should know that Core Graphics is extremely fast: you can use it for updating drawing in real time, and you'll be very impressed. Core Graphics can work on a background thread \'96 something that UIKit can't do \'96 which means you can do complicated drawing without locking up your user interface.\
+\
+It's time to start looking at some code, so it\'92s time to meet the\'a0
+\f1\b \cf4 \strokec4 UIGraphicsImageRenderer
+\f0\b0 \cf2 \strokec2 \'a0class. This was introduced in iOS 10 to allow fast and easy graphics rendering, while also quietly adding support for wide color devices like the iPad Pro. It works with closures, which might seem annoying if you\'92re still not comfortable with them, but has the advantage that you can build complex drawing instructions by composing functions.\
+\
+Now, wait a minute: that class name starts with "UI", so what makes it anything to do with Core Graphics? Well, it\'a0
+\f2\i isn\'92t
+\f0\i0 \'a0a Core Graphics class; it\'92s a UIKit class, but it acts as a gateway to and from Core Graphics for UIKit-based apps like ours. You create a renderer object and start a rendering context, but everything between will be Core Graphics functions or UIKit methods that are designed to work with Core Graphics contexts.\
+\
+In Core Graphics, a context is a canvas upon which we can draw, but it also stores information about how we want to draw (e.g., what should our line thickness be?) and information about the device we are drawing to. So, it's a combination of canvas and metadata all in one, and it's what you'll be using for all your drawing. This Core Graphics context is exposed to us when we render with\'a0
+\f1\b \cf4 \strokec4 UIGraphicsImageRenderer
+\f0\b0 \cf2 \strokec2 .\
+\
+When you create a renderer, you get to specify how big it should be, whether it should be opaque or not, and what pixel to point scale you want. To kick off rendering you can either call the\'a0
+\f1\b \cf4 \strokec4 image()
+\f0\b0 \cf2 \strokec2 \'a0function to get back a\'a0
+\f1\b \cf4 \strokec4 UIImage
+\f0\b0 \cf2 \strokec2 \'a0of the results, or call the\'a0
+\f1\b \cf4 \strokec4 pngData()
+\f0\b0 \cf2 \strokec2 \'a0and\'a0
+\f1\b \cf4 \strokec4 jpegData()
+\f0\b0 \cf2 \strokec2 \'a0methods to get back a\'a0
+\f1\b \cf4 \strokec4 Data
+\f0\b0 \cf2 \strokec2 \'a0object in PNG or JPEG format respectively\
+}
