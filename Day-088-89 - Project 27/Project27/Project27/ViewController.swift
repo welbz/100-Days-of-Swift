@@ -183,7 +183,7 @@ class ViewController: UIViewController {
         
         let img = renderer.image { ctx in
             let paragraphStlye = NSMutableParagraphStyle()
-            paragraphStlye.alignment = .center
+            paragraphStlye.alignmen  t = .center
             
             let attrs: [NSAttributedString.Key: Any] = [
                 .font: UIFont.systemFont(ofSize: 32),
