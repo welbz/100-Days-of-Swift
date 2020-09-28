@@ -47,6 +47,9 @@ class ViewController: UIViewController {
         case 2:
             drawCheckerBoard() // 7 - Video 4
         
+        case 3:
+            drawRotatedSquares() // 8 - Video 5
+        
         default:
             break
         }
@@ -106,6 +109,30 @@ class ViewController: UIViewController {
                     }
                 }
             }
+        }
+        
+        imageView.image = img
+    }
+    
+    // 8 - Video 5
+    func drawRotatedSquares() {
+        // Rotates by top left corner
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512)) // in pt not px
+        
+        
+        let img = renderer.image { ctx in
+            ctx.cgContext.translateBy(x: 256, y: 256)
+            
+            let rotations = 16
+            let amount = Double.pi / Double(rotations)
+            
+            for _ in 0..<rotations {
+                ctx.cgContext.rotate(by: CGFloat(amount))
+                ctx.cgContext.addRect(CGRect(x: -128, y: -128, width: 256, height: 256))
+            }
+            
+            ctx.cgContext.setStrokeColor(UIColor.black.cgColor) // sets stroke
+            ctx.cgContext.strokePath() // draws stroke
         }
         
         imageView.image = img
