@@ -41,7 +41,7 @@ class GameViewController: UIViewController {
                 
                 // 7 - Video 3
                 currentGame = scene as? GameScene // be safe
-                currentGame?.viewConroller = self
+                currentGame?.viewController = self
                 // set VC to be self - establish communication between them
             }
             

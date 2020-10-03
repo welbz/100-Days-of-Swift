@@ -44,6 +44,7 @@ class BuildingNode: SKSpriteNode {
     
     
     // 3 - Video 2
+    // renders UIImage and stashes it away in the current image property and uses that as the texture of the building
     func drawBuilding(size: CGSize) -> UIImage {
         let renderer = UIGraphicsImageRenderer(size: size)
         
@@ -86,5 +87,26 @@ class BuildingNode: SKSpriteNode {
             }
         }
         return img // return img back to use in main scene
+    }
+    
+    // 20 - Video 4
+    func hit(at point: CGPoint) {
+        // where in Core Graphics space did the banana hit in our image
+    let convertedPoint = CGPoint(x: point.x + size.width / 2, y: abs(point.y - (size.height / 2))) //abs take negative sign and make it positive
+    
+        let renderer = UIGraphicsImageRenderer(size: size)
+        let img = renderer.image { ctx in
+            currentImage.draw(at: .zero) // fill current image
+            
+            // clear circle where hit
+            ctx.cgContext.addEllipse(in: CGRect(x: convertedPoint.x - 32, y: convertedPoint.y - 32, width: 64, height: 64)) // centered on hit
+            ctx.cgContext.setBlendMode(.clear) // destroy whats there
+            ctx.cgContext.drawPath(using: .fill)
+        }
+        
+        // assign it back to SKTexture, assign to currentImage, call configurePhysics again to redraw around new texture
+        texture = SKTexture(image: img)
+        currentImage = img
+        configurePhysics()
     }
 }
