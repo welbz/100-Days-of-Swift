@@ -94,12 +94,7 @@ class GameViewController: UIViewController {
         launchButton.isHidden = true
         
         currentGame?.launch(angle: Int(angleSlider.value), velocity: Int(velocitySlider.value))
-    }
-    /*
-     When a player taps the launch button, we need to hide the user interface so they can't try to fire again until we're ready, then tell the game scene to launch a banana using the current angle and velocity. Our game will then proceed with physics calculations until the banana is destroyed or lost (i.e., off screen), at which point the game will tell the game controller to change players and continue.
-     
-     The code for the launch() method - the work of actually launching the banana is hidden behind a call to a launch() method that we'll add to the game scene shortly
-     */
+    }// See Notes - Launch
     
     // 11 - Video 3
     func activatePlayer(number: Int) {

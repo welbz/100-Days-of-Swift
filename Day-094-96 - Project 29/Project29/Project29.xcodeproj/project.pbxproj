@@ -14,6 +14,9 @@
 		DA1FB7B325268E410089FE1F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA1FB7B125268E410089FE1F /* Main.storyboard */; };
 		DA1FB7B525268E430089FE1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA1FB7B425268E430089FE1F /* Assets.xcassets */; };
 		DA1FB7BF25268F560089FE1F /* BuildingNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1FB7BE25268F560089FE1F /* BuildingNode.swift */; };
+		DAE8ADA92528388600C25382 /* Notes.rtf in Resources */ = {isa = PBXBuildFile; fileRef = DAE8ADA82528388600C25382 /* Notes.rtf */; };
+		DAE8ADB125283D3400C25382 /* hitBuilding.sks in Resources */ = {isa = PBXBuildFile; fileRef = DAE8ADAF25283D3400C25382 /* hitBuilding.sks */; };
+		DAE8ADB225283D3400C25382 /* hitPlayer.sks in Resources */ = {isa = PBXBuildFile; fileRef = DAE8ADB025283D3400C25382 /* hitPlayer.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,9 @@
 		DA1FB7B425268E430089FE1F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA1FB7B625268E430089FE1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA1FB7BE25268F560089FE1F /* BuildingNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingNode.swift; sourceTree = "<group>"; };
+		DAE8ADA82528388600C25382 /* Notes.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Notes.rtf; sourceTree = "<group>"; };
+		DAE8ADAF25283D3400C25382 /* hitBuilding.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = hitBuilding.sks; sourceTree = "<group>"; };
+		DAE8ADB025283D3400C25382 /* hitPlayer.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = hitPlayer.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +72,9 @@
 				DA1FB7B125268E410089FE1F /* Main.storyboard */,
 				DA1FB7B425268E430089FE1F /* Assets.xcassets */,
 				DA1FB7B625268E430089FE1F /* Info.plist */,
+				DAE8ADAF25283D3400C25382 /* hitBuilding.sks */,
+				DAE8ADB025283D3400C25382 /* hitPlayer.sks */,
+				DAE8ADA82528388600C25382 /* Notes.rtf */,
 			);
 			path = Project29;
 			sourceTree = "<group>";
@@ -127,6 +136,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAE8ADA92528388600C25382 /* Notes.rtf in Resources */,
+				DAE8ADB125283D3400C25382 /* hitBuilding.sks in Resources */,
+				DAE8ADB225283D3400C25382 /* hitPlayer.sks in Resources */,
 				DA1FB7B325268E410089FE1F /* Main.storyboard in Resources */,
 				DA1FB7AA25268E410089FE1F /* GameScene.sks in Resources */,
 				DA1FB7B525268E430089FE1F /* Assets.xcassets in Resources */,
