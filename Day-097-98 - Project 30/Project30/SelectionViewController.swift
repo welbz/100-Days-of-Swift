@@ -7,11 +7,11 @@
 //
 
 // Notes
-// Command I to open instruments
-// can searc to filter eg UI
-// malloc = memory allocate
-// peristance = created and still exist
-// transient = created and destroyed
+    // Command I to open instruments
+    // can searc to filter eg UI
+    // malloc = memory allocate
+    // peristance = created and still exist
+    // transient = created and destroyed
 
 
 
@@ -19,7 +19,9 @@ import UIKit
 
 class SelectionViewController: UITableViewController {
 	var items = [String]() // this is the array that will store the filenames to load
-	var viewControllers = [UIViewController]() // create a cache of the detail view controllers for faster loading
+
+    // 8 - Video 6 - removed now its not used
+    //	var viewControllers = [UIViewController]() // create a cache of the detail view controllers for faster loading
 	var dirty = false
 
     override func viewDidLoad() {
@@ -130,7 +132,8 @@ class SelectionViewController: UITableViewController {
 
 		return cell
     }
-
+    
+    
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let vc = ImageViewController()
 		vc.image = items[indexPath.row % items.count]
@@ -139,8 +142,9 @@ class SelectionViewController: UITableViewController {
 		// mark us as not needing a counter reload when we return
 		dirty = false
 
-		// add to our view controller cache and show
-		viewControllers.append(vc)
+// 7 - remove no need to cache
+    //		add to our view controller cache and show
+    //		viewControllers.append(vc)
 		navigationController!.pushViewController(vc, animated: true)
 	}
 }

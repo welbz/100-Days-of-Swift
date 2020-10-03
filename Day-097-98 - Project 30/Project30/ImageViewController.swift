@@ -9,7 +9,9 @@
 import UIKit
 
 class ImageViewController: UIViewController {
-	var owner: SelectionViewController!
+	// 9 - Video 6 - make it weak to break strong reference cycle
+    weak var owner: SelectionViewController!
+    
 	var image: String!
 	var animTimer: Timer!
 
@@ -34,9 +36,16 @@ class ImageViewController: UIViewController {
 		imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
 		imageView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
 
-		// schedule an animation that does something vaguely interesting
+		
+        // 10 - Video 6 - animation is causing images to not be destroyed
+        // timers hold a strong reference to it
+        
+        
+        // schedule an animation that does something vaguely interesting
 		animTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { timer in
 			// do something exciting with our image
+            
+            // VC owns the timer and then the timer owns VC
 			self.imageView.transform = CGAffineTransform.identity
 
 			UIView.animate(withDuration: 3) {
@@ -49,7 +58,12 @@ class ImageViewController: UIViewController {
         super.viewDidLoad()
 
 		title = image.replacingOccurrences(of: "-Large.jpg", with: "")
-		let original = UIImage(named: image)!
+		
+        // 7 - Video 6
+        let path = Bundle.main.path(forResource: image, ofType: nil)! // force cause we know its in bundle
+        
+        let original = UIImage(contentsOfFile: path)!
+        //let original = UIImage(named: image)! // cache images uneccessarily
 
 		let renderer = UIGraphicsImageRenderer(size: original.size)
 
@@ -72,6 +86,12 @@ class ImageViewController: UIViewController {
 			self.imageView.alpha = 1
 		}
 	}
+    
+    // 11 - Video 6
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        animTimer.invalidate() // stops timer, forces it to release its strong reference on the VC it belongs to, which breaks the strong refernce cycle
+    }
 
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 		let defaults = UserDefaults.standard
