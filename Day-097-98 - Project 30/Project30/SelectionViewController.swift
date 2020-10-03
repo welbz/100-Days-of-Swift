@@ -6,6 +6,15 @@
 //  Copyright (c) 2016 TwoStraws. All rights reserved.
 //
 
+// Notes
+// Command I to open instruments
+// can searc to filter eg UI
+// malloc = memory allocate
+// peristance = created and still exist
+// transient = created and destroyed
+
+
+
 import UIKit
 
 class SelectionViewController: UITableViewController {
@@ -20,6 +29,9 @@ class SelectionViewController: UITableViewController {
 
 		tableView.rowHeight = 90
 		tableView.separatorStyle = .none
+        
+        // 5 - Video 5 - When we request a cell we immediatly get one back reused automatically and never nil
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
 
 		// load all the JPEGs into our array
 		let fm = FileManager.default
@@ -56,8 +68,21 @@ class SelectionViewController: UITableViewController {
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
-
+        
+        // 6 - Video 5
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        
+        //let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
+        
+        // 4 - Video 4 - ReusableCell
+//        var cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
+//
+//        // if it fails make a new cell
+//        if cell == nil {
+//            cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
+//        }
+        
+        
 		// find the image for this cell, and load its thumbnail
 		let currentImage = items[indexPath.row % items.count]
 		let imageRootName = currentImage.replacingOccurrences(of: "Large", with: "Thumb")
