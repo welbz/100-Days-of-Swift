@@ -64,22 +64,40 @@ class SelectionViewController: UITableViewController {
 		let path = Bundle.main.path(forResource: imageRootName, ofType: nil)!
 		let original = UIImage(contentsOfFile: path)!
 
-		let renderer = UIGraphicsImageRenderer(size: original.size)
+        // 2 - Video 3 - create image render to correct size
+        let renderRect = CGRect(origin: .zero, size: CGSize(width:90, height: 90))
+        
+        let renderer = UIGraphicsImageRenderer(size: renderRect.size) // use new size
+		// let renderer = UIGraphicsImageRenderer(size: original.size) // ws using full original size 2500px
 
 		let rounded = renderer.image { ctx in
-			ctx.cgContext.addEllipse(in: CGRect(origin: CGPoint.zero, size: original.size))
+//            // 1 - Video 3 - fixing shadows with setShadow
+//            // draws shadow inside UIImage rendere path
+//            ctx.cgContext.setShadow(offset: .zero, blur: 200, color: UIColor.black.cgColor) // 200 blur relative to size of image been drawn original.size
+//            ctx.cgContext.fillEllipse(in: CGRect(origin: .zero, size: original.size)) // draw elips full size of our image using our shadow
+//            ctx.cgContext.setShadow(offset: .zero, blur: .zero, color: nil) // nil colour clears shadow
+            
+            // original code
+            ctx.cgContext.addEllipse(in: renderRect)
+            // ctx.cgContext.addEllipse(in: CGRect(origin: CGPoint.zero, size: original.size))
 			ctx.cgContext.clip()
 
-			original.draw(at: CGPoint.zero)
+            original.draw(in: renderRect) // load large image but scaled down
+			//original.draw(at: CGPoint.zero)
 		}
 
 		cell.imageView?.image = rounded
 
+        // original shadows
 		// give the images a nice shadow to make them look a bit more dramatic
 		cell.imageView?.layer.shadowColor = UIColor.black.cgColor
 		cell.imageView?.layer.shadowOpacity = 1
 		cell.imageView?.layer.shadowRadius = 10
 		cell.imageView?.layer.shadowOffset = CGSize.zero
+        
+        // 3 - Video 4 - set shadow path
+        // This way UI doesnt need to find the shadow cause we set it doesnt need a second render pass
+        cell.imageView?.layer.shadowPath = UIBezierPath(ovalIn: renderRect).cgPath
 
 		// each image stores how often it's been tapped
 		let defaults = UserDefaults.standard
